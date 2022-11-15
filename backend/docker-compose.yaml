@@ -1,0 +1,38 @@
+version: "3.8"
+services:
+  db:
+    container_name: database_pg
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_NAME=${HOST_NAME}
+      - POSTGRES_USER=${USER_NAME}
+      - POSTGRES_PASSWORD=${PASSWORD}
+    ports:
+      - 5432:5432
+    volumes:
+      - ./db/db_sql.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - dock-db-test
+  app :
+    restart: always
+    build: ./
+    image: app:latest
+    ports:
+      - 5000:5000
+    depends_on:
+      - db
+    networks:
+      - dock-db-test
+  frontend :
+    restart: always
+    build: ../frontend
+    image: frontend:latest
+    ports:
+      - 5173:5173
+    depends_on:
+      - app
+networks:
+  dock-db-test:
+    external: false
+    name: dock-db-test
