@@ -24,6 +24,14 @@ services:
       - db
     networks:
       - dock-db-test
+  frontend :
+    restart: always
+    build: ../frontend
+    image: frontend:latest
+    ports:
+      - 5173:5173
+    depends_on:
+      - app
 networks:
   dock-db-test:
     external: false
