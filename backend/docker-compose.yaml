@@ -10,8 +10,6 @@ services:
       - POSTGRES_PASSWORD=${PASSWORD}
     ports:
       - 5432:5432
-    volumes:
-      - ./db/db_sql.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - dock-db-test
   app :
