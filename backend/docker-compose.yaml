@@ -22,6 +22,8 @@ services:
       - db
     networks:
       - dock-db-test
+    links:
+      - db
   frontend :
     restart: always
     build: ../frontend
@@ -29,6 +31,10 @@ services:
     ports:
       - 3000:3000
     depends_on:
+      - app
+    networks:
+      - dock-db-test
+    links:
       - app
 networks:
   dock-db-test:
