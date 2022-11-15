@@ -27,7 +27,9 @@
             "@assets/*": ["assets/*"],
             "@components/*": ["components/*"],
             "@pages/*": ["pages/*"],
-            "@helpers/*": ["helpers/*"]
+            "@helpers/*": ["helpers/*"],
+            "@constants/*": ["constants/*"],
+            "@constants": ["constants/index"]
         }
     },
     "include": ["src"],
