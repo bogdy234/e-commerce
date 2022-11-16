@@ -28,7 +28,6 @@ class Role(db.Model):
         except:
             return False
 
-
     def serialize(self):
         return {
             "rid": self.rid,

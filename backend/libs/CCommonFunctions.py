@@ -1,5 +1,7 @@
 import re
+
 from models.Role import Role
+
 
 class CCommonFunctions:
     @staticmethod
