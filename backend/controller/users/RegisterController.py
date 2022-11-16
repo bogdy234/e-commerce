@@ -25,23 +25,29 @@ class RegisterController:
             dic_register["message"] = Constants.DUPLICATE_EMAIL_REGISTER
             dic_register["code"] = Constants.CONFLICT_CODE
             return dic_register
+        if not CCommonFunctions.check_valid_email(kwargs.get("email")):
+            dic_register["message"] = Constants.INVALID_EMAIL_PATTERN
+            dic_register["code"] = Constants.BAD_REQUEST
+            return dic_register
         if kwargs.get("password") != kwargs.get("confirm_password"):
             dic_register["message"] = Constants.PASSWORD_NOT_MATCH
-            dic_register["code"] = Constants.CONFLICT_CODE
+            dic_register["code"] = Constants.BAD_REQUEST
             return dic_register
         message_password, status_password = CCommonFunctions.validate_password(
             kwargs.get("password")
         )
         if not status_password:
             dic_register["message"] = message_password
-            dic_register["code"] = Constants.CONFLICT_CODE
+            dic_register["code"] = Constants.BAD_REQUEST
             return dic_register
         user_register = User(
             first_name=kwargs.get("first_name"),
             last_name=kwargs.get("last_name"),
             email=kwargs.get("email"),
             role_id=Constants.DEFUALT_USER_GROUP,
-            password=bcrypt.hashpw(kwargs.get("password").encode(), bcrypt.gensalt()),
+            password=bcrypt.hashpw(
+                kwargs.get("password").encode("utf-8"), bcrypt.gensalt()
+            ).decode("utf-8"),
             vat=Constants.DEFAULT_R0MANIA_VAT,
         )
         user_saved = user_register.save()

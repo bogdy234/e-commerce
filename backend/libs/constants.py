@@ -8,6 +8,8 @@ class Constants:
     NOT_FOUND_CODE = 404
     CONFLICT_CODE = 409
     NO_CONTENT = 204
+    BAD_REQUEST = 400
     REGISTRATION_SUCCESS = "Your account was created!"
     DEFAULT_R0MANIA_VAT = 19
     DEFUALT_USER_GROUP = 1  # BASIC_USER
+    INVALID_EMAIL_PATTERN = "Please use a valid email address!"

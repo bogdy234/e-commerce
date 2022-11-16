@@ -30,3 +30,8 @@ class CCommonFunctions:
         ):
             BASIC_USER.save()
             ADMIN.save()
+
+    @staticmethod
+    def check_valid_email(email_address):
+        regex = r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b"
+        return re.fullmatch(regex, email_address)
