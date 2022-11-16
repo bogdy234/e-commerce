@@ -5,9 +5,11 @@ services:
     image: postgres:latest
     restart: always
     environment:
-      - POSTGRES_NAME=${HOST_NAME}
+      - POSTGRES_NAME=${DB_NAME}
       - POSTGRES_USER=${USER_NAME}
       - POSTGRES_PASSWORD=${PASSWORD}
+    volumes:
+      - ./db-data/:/var/lib/postgresql/data/
     ports:
       - 5432:5432
     networks:
