@@ -6,8 +6,6 @@ load_dotenv(find_dotenv())
 
 app = Flask(__name__)
 
-SECRET_KEY = "fkjfsdlkhjsdkanhfasnhljfa"
-
 app.secret_key = os.environ.get("SECRET_KEY")
 
 # our database uri
