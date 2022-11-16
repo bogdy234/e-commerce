@@ -10,12 +10,12 @@ class RegisterController:
     def __init__(self) -> None:
         self.log_msg = LogHandler("register_controller.log")
 
-    def check_duplicate_email(self, email):
+    def check_duplicate_email(self, email : str) -> bool:
         if User.query.filter_by(email=email).first():
             return True
         return False
 
-    def register(self, **kwargs):
+    def register(self, **kwargs) -> dict:
         dic_register = {
             "message": Constants.DEFAULT_REGISTER_MESSAGE,
             "code": Constants.NO_CONTENT,
