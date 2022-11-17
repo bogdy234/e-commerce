@@ -18,7 +18,7 @@ def show_help():
     """)
 
 def build_project():
-    os.system("cd backend/ && docker-compose build")
+    os.system("cd backend/ && docker-compose down && docker-compose build")
 
 def build_project_backend():
     os.system("cd backend/ && docker-compose build app")
@@ -38,6 +38,10 @@ def stop_project():
 def restart_project():
     os.system("cd backend/ && docker-compose restart")
 
+def up_project_force():
+    os.system("cd backend/ && rm -rf db-data")
+    os.system("cd backend/ && docker-compose up --force-recreate")
+
 def up_project():
     os.system("cd backend/ && docker-compose up")
     
@@ -50,6 +54,7 @@ parser.add_argument("-start","-start",const="start", action="store_const",defaul
 parser.add_argument("-stop","-stop",const="stop", action="store_const",default=None)
 parser.add_argument("-restart","-restart",const="restart", action="store_const",default=None)
 parser.add_argument("-up","-up",const="up", action="store_const",default=None)
+parser.add_argument("-up_force","-up_force",const="up", action="store_const",default=None)
 parser.add_argument("-help","-help",const="show_help", action="store_const",default=None)
 
 args = parser.parse_args()
@@ -62,6 +67,7 @@ stop = args.stop
 restart = args.restart
 up = args.up
 helper = args.help
+up_force = args.up_force
 
 if helper:
     show_help()
@@ -81,3 +87,5 @@ if restart:
     restart_project()
 if up:
     up_project()
+if up_force:
+    up_project_force()
