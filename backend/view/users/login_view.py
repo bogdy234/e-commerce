@@ -6,7 +6,7 @@ from libs.JwtHandler import check_auth
 from models.User import User
 
 
-@app.route("/api/users/login/", methods=["POST", "GET"])
+@app.route("/api/users/login/", methods=["POST"])
 def login():
     if request.method == "POST":
         email = request.json["email"]
