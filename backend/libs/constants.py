@@ -13,3 +13,9 @@ class Constants:
     DEFAULT_R0MANIA_VAT = 19
     DEFUALT_USER_GROUP = 1  # BASIC_USER
     INVALID_EMAIL_PATTERN = "Please use a valid email address!"
+    USER_NOT_FOUND = "Password or email wrong! Please try again!"
+    INVALID_JWT_TOKEN = "The JWT token it's invalid!"
+    EXPIRED_JWT_TOKEN = "The JWT token has expired!"
+    VALID_JWT_TOKEN = "Valid token!"
+    INVALID_PASSWORD = "Invalid password. Please try again!"
+    LOGIN_SUCCESS = "Log in success!"
