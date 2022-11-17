@@ -9,7 +9,8 @@ load_dotenv(find_dotenv())
 
 app = Flask(__name__)
 CORS(app)
-app.secret_key = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
+app.secret_key = SECRET_KEY
 
 # our database uri
 host = os.environ.get("HOST_NAME")
