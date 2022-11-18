@@ -4,7 +4,7 @@ from application import app
 from controller.users.RegisterController import RegisterController
 
 
-@app.route("/api/users/register/", methods=["POST"])
+@app.route("/api/users/register", methods=["POST"])
 def register():
     if request.method == "POST":
         first_name = request.json["first_name"]
