@@ -9,6 +9,8 @@ class Constants:
     CONFLICT_CODE = 409
     NO_CONTENT = 204
     BAD_REQUEST = 400
+    UNAUTHORIZED = 401
+    UNAUTHORIZED_MESSAGE = "Auth required! Please log in!"
     REGISTRATION_SUCCESS = "Your account was created!"
     DEFAULT_R0MANIA_VAT = 19
     DEFUALT_USER_GROUP = 1  # BASIC_USER
@@ -19,3 +21,4 @@ class Constants:
     VALID_JWT_TOKEN = "Valid token!"
     INVALID_PASSWORD = "Invalid password. Please try again!"
     LOGIN_SUCCESS = "Log in success!"
+    BAD_REQUEST_MESSAGE = "Bad request, missing params: {}"

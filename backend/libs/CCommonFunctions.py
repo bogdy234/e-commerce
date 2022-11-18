@@ -5,7 +5,7 @@ from models.Role import Role
 
 class CCommonFunctions:
     @staticmethod
-    def validate_password(password : str) -> tuple:
+    def validate_password(password: str) -> tuple:
         if len(password) < 8:
             return "Password length must be greater than 8", False
         elif len(password) > 18:
