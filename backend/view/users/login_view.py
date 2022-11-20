@@ -1,6 +1,6 @@
 from flask import jsonify, request, make_response
 
-from application import app
+from application import app, production
 from controller.users.LoginController import LoginController
 
 
@@ -12,5 +12,5 @@ def login():
         permanent_session = request.json["remember"]
         data_login = LoginController().login(email, password, permanent_session)
         resp = make_response(jsonify(data_login), data_login.get("code", 500))
-        resp.set_cookie("jwt",data_login.get("token"),secure=True,httponly=True,samesite=None)
+        resp.set_cookie("jwt",data_login.get("token"),secure=False if not production else True,httponly=True,samesite=None)
         return resp
