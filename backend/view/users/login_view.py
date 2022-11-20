@@ -1,4 +1,4 @@
-from flask import jsonify, request
+from flask import jsonify, request, make_response
 
 from application import app
 from controller.users.LoginController import LoginController
@@ -11,4 +11,6 @@ def login():
         password = request.json["password"]
         permanent_session = request.json["remember"]
         data_login = LoginController().login(email, password, permanent_session)
-        return jsonify(data_login), data_login.get("code", 500)
+        resp = make_response(jsonify(data_login), data_login.get("code", 500))
+        resp.set_cookie("jwt",data_login.get("token"),secure=True,httponly=True,samesite=None)
+        return resp

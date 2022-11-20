@@ -17,6 +17,7 @@ host = os.environ.get("HOST_NAME")
 database = os.environ.get("DB_NAME")
 user = os.environ.get("USER_NAME")
 password = os.environ.get("PASSWORD")
+production = True if os.environ.get("PRODUCTION") == "True" else False
 app.config[
     "SQLALCHEMY_DATABASE_URI"
 ] = f"postgresql://{user}:{password}@{host}/{database}"
