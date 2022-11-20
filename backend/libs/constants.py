@@ -1,3 +1,6 @@
+import enum
+
+
 class Constants:
     DEFAULT_REGISTER_MESSAGE = "Error on register. Please try again!"
     DUPLICATE_EMAIL_REGISTER = (
@@ -22,3 +25,16 @@ class Constants:
     INVALID_PASSWORD = "Invalid password. Please try again!"
     LOGIN_SUCCESS = "Log in success!"
     BAD_REQUEST_MESSAGE = "Bad request, missing params: {}"
+
+
+class Category(enum.Enum):
+
+    ELECTRONICS = "electronics"
+    GAMING = "gaming"
+    FASHION = "fashion"
+
+
+class Title(enum.Enum):
+
+    MR = "MR"
+    MS = "MS"
