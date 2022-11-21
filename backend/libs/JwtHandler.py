@@ -9,12 +9,11 @@ from libs.constants import Constants
 from models.User import User
 
 
-def check_auth(func=None, admin=False):
-    @wraps(func)
+def check_auth(admin=False):
+    @wraps(admin)
     def check_auth_function(function):
         @wraps(function)
         def wrapper(*args, **kwargs):
-            print(admin)
             auth_token = request.headers.get("Authorization")
             if auth_token:
                 auth_token = auth_token.split("Bearer")[1].strip()
