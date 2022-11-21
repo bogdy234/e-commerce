@@ -1,15 +1,16 @@
 import { useState, ReactElement, FC, useEffect } from "react";
 import { useCookies } from "react-cookie";
+import { Link } from "react-router-dom";
 
 import Searchbar from "@components/Searchbar";
 import { NavOption } from "@interfaces/navbar";
 import { SCREEN_BREAKPOINTS } from "@constants";
+import useUser from "@hooks/user/useUser";
 
 import {
     AppBar,
     Badge,
     Button,
-    Link,
     Stack,
     Toolbar,
     Typography,
@@ -26,6 +27,7 @@ interface NavbarProps {}
 
 const Navbar: FC<NavbarProps> = () => {
     const matches = useMediaQuery(`(min-width:${SCREEN_BREAKPOINTS.md})`);
+    const { state, dispatch } = useUser();
     const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
     const [options, setOptions] = useState<NavOption[]>([
@@ -35,8 +37,7 @@ const Navbar: FC<NavbarProps> = () => {
     ]);
 
     useEffect(() => {
-        if (cookies?.token) {
-            console.log("here");
+        if (state?.token) {
             const newOptions = [...options];
             newOptions[0] = {
                 icon: <PersonIcon />,
@@ -48,6 +49,15 @@ const Navbar: FC<NavbarProps> = () => {
                 label: "Logout",
                 href: "/",
             };
+            setOptions(newOptions);
+        } else {
+            let newOptions = [...options];
+            newOptions[0] = {
+                icon: <PersonIcon />,
+                label: "Login",
+                href: "/signin",
+            };
+            newOptions = newOptions.filter((option, index) => index !== 3);
             setOptions(newOptions);
         }
     }, [cookies]);
@@ -66,27 +76,25 @@ const Navbar: FC<NavbarProps> = () => {
         if (label !== "Logout") {
             return;
         }
+        dispatch({ type: "SET_USER", payload: { user: null, token: "" } });
         removeCookie("token");
     };
 
     return (
         <AppBar>
             <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-                <Link href="/" underline="none" sx={{ color: "white" }}>
-                    <HomeIcon />
+                <Link to="/">
+                    <HomeIcon sx={{ color: "white" }} />
                 </Link>
                 <Searchbar />
                 <Stack direction="row" spacing={3}>
                     {options.map(({ href, icon, label }) => (
                         <Button onClick={() => onClick(label)} key={label}>
-                            <Link
-                                href={href}
-                                underline="none"
-                                sx={{ color: "white" }}
-                            >
+                            <Link to={href} style={{ textDecoration: "none" }}>
                                 <Stack
                                     sx={{
                                         cursor: "pointer",
+                                        color: "white",
                                     }}
                                     alignItems="center"
                                 >

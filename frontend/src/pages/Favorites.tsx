@@ -6,7 +6,9 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
+import { SCREEN_BREAKPOINTS } from "@constants";
 import FavoritesCard from "@components/FavoritesCard";
 
 interface FavoritesProps {}
@@ -34,8 +36,10 @@ const products = [
 ];
 
 const Favorites: FC<FavoritesProps> = (): ReactElement => {
+    const matches = useMediaQuery(`(min-width:${SCREEN_BREAKPOINTS.md})`);
+
     return (
-        <Container sx={{ mt: 12 }}>
+        <Container sx={{ mt: 12 }} maxWidth={matches ? "xl" : "sm"}>
             <Box
                 sx={{ backgroundColor: "white", px: 8, py: 4, borderRadius: 1 }}
             >

@@ -32,7 +32,9 @@
             "@constants": ["constants/index"],
             "@interfaces/*": ["interfaces/*"],
             "@api/*": ["api/*"],
-            "@theme": ["theme"]
+            "@theme": ["theme"],
+            "@hooks/*": ["hooks/*"],
+            "@contexts/*": ["contexts/*"]
         }
     },
     "include": ["src"],

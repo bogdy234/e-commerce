@@ -6,9 +6,12 @@ import "@fontsource/roboto/700.css";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
+import { UserProvider } from "@contexts/UserProvider";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <React.StrictMode>
-        <App />
+        <UserProvider>
+            <App />
+        </UserProvider>
     </React.StrictMode>
 );

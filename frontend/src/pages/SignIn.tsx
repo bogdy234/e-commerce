@@ -1,6 +1,4 @@
-import { FC, FormEvent, useEffect, useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { FC, FormEvent, useEffect } from "react";
 import { useCookies } from "react-cookie";
 
 import Avatar from "@mui/material/Avatar";
@@ -14,72 +12,23 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { isValidEmail } from "@helpers/helpers";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import ERRORS from "@constants/errors";
-import { loginUser } from "@api/user";
 import { UserLoginParams } from "@interfaces/user";
+import useLoginMutation from "@hooks/user/useLoginMutation";
 
 const SignIn: FC = () => {
-    const queryClient = useQueryClient();
-    const navigate = useNavigate();
-
     const [cookies, setCookie] = useCookies(["token"]);
-    const [formError, setFormError] = useState<string>("");
-    const [emailError, setEmailError] = useState<string>("");
-    const [passwordError, setPasswordError] = useState<string>("");
 
-    useEffect(() => {
-        console.log(cookies?.token);
-        if (cookies?.token) {
-            navigate("/");
-        }
-    }, []);
-
-    const { mutate, isLoading } = useMutation(loginUser, {
-        onSuccess: (data) => {
-            setCookie("token", data.token, { path: "/" });
-            navigate("/");
-        },
-        onError: (data: any) => {
-            setFormError(
-                data?.response?.data?.message ||
-                    "There was an error. Please try again later."
-            );
-        },
-        onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: ["loginUser"] });
-        },
-    });
-
-    const clearErrors = () => {
-        setEmailError("");
-        setPasswordError("");
-    };
-
-    const validateInputs = (
-        email: FormDataEntryValue | null,
-        password: FormDataEntryValue | null
-    ) => {
-        let isValid = true;
-
-        if (!email) {
-            setEmailError(ERRORS.NO_EMPTY_FIELD);
-            isValid = false;
-        }
-
-        if (!password) {
-            setPasswordError(ERRORS.NO_EMPTY_FIELD);
-            isValid = false;
-        }
-
-        if (!isValidEmail(email as string)) {
-            setEmailError(ERRORS.INVALID_EMAIL);
-            isValid = false;
-        }
-        return isValid;
-    };
+    const {
+        clearErrors,
+        emailError,
+        passwordError,
+        formError,
+        mutate,
+        isLoading,
+        validateInputs,
+    } = useLoginMutation();
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
