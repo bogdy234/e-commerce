@@ -4,6 +4,12 @@ import enum
 class Constants:
     DEFAULT_REGISTER_MESSAGE = "Error on register. Please try again!"
     DEFAULT_PRODUCT_MESSAGE = "Error on adding new product. Please try again!"
+    DEFAULT_FAVOURITE_PRODUCT = (
+        "Error on adding the product to favourite. Please try again!"
+    )
+    DEFAULT_DELETE_FAVOURITE_PRODUCT = (
+        "Error on delete the product from favourite! Please try again!"
+    )
     DUPLICATE_EMAIL_REGISTER = (
         "This email it's already used. Please try again with anothe email!"
     )
@@ -39,6 +45,12 @@ class Constants:
     REQUIRED_ADMIN_ROLE = "To do this action you need admin role!"
     PRODUCT_UPDATED = "Product updated successful!"
     PRODUCT_DELETED = "Product with id : {} was deleted"
+    FAVOURITE_PRODUCT_ALREADY_EXIST = (
+        "This product it's already in your favourite list!"
+    )
+    FAVOURITE_PRODUCT_SAVED = "The product was saved in favourites!"
+    FAVOURITE_PRODUCT_NOT_YOURS = "This product it's not in your favourite list!"
+    FAVOURITE_PRODUCT_DELETED = "Your product from favourite was deleted!"
 
 
 class Category(enum.Enum):
