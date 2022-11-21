@@ -9,42 +9,61 @@ from libs.constants import Constants
 from models.User import User
 
 
-def check_auth(function):
-    @wraps(function)
-    def wrapper(*args, **kwargs):
-        auth_token = request.headers.get("Authorization")
-        if auth_token:
-            auth_token = auth_token.split("Bearer")[1].strip()
-            token_valability, token_status = JwtHandler.check_valability(auth_token)
-            if not token_status:
+def check_auth(func=None, admin=False):
+    @wraps(func)
+    def check_auth_function(function):
+        @wraps(function)
+        def wrapper(*args, **kwargs):
+            print(admin)
+            auth_token = request.headers.get("Authorization")
+            if auth_token:
+                auth_token = auth_token.split("Bearer")[1].strip()
+                token_valability, token_status = JwtHandler.check_valability(auth_token)
+                if not token_status:
+                    return (
+                        jsonify(
+                            {"message": token_valability, "code": Constants.BAD_REQUEST}
+                        ),
+                        Constants.BAD_REQUEST,
+                    )
+                decoded_token = JwtHandler.decode(auth_token)
+                user = User.query.get(decoded_token.get("cid"))
+                if user:
+                    if admin:
+                        if user.role.rid != Constants.ADMIN_ROLE:
+                            return (
+                                jsonify(
+                                    {
+                                        "message": Constants.REQUIRED_ADMIN_ROLE,
+                                        "code": Constants.UNAUTHORIZED,
+                                    }
+                                ),
+                                Constants.UNAUTHORIZED,
+                            )
+                    return function(user, *args, **kwargs)
+                return {
+                    jsonify(
+                        {
+                            "message": Constants.USER_NOT_FOUND,
+                            "code": Constants.NOT_FOUND_CODE,
+                        }
+                    ),
+                    Constants.NOT_FOUND_CODE,
+                }
+            else:
                 return (
                     jsonify(
-                        {"message": token_valability, "code": Constants.BAD_REQUEST}
+                        {
+                            "message": Constants.UNAUTHORIZED_MESSAGE,
+                            "code": Constants.UNAUTHORIZED,
+                        }
                     ),
-                    Constants.BAD_REQUEST,
+                    Constants.UNAUTHORIZED,
                 )
-            decoded_token = JwtHandler.decode(auth_token)
-            user = User.query.get(decoded_token.get("cid"))
-            if user:
-                return function(user, *args, **kwargs)
-            return {
-                jsonify(
-                    {"message": Constants.USER_NOT_FOUND, "code":Constants.NOT_FOUND_CODE}
-                ),
-                Constants.NOT_FOUND_CODE
-            }
-        else:
-            return (
-                jsonify(
-                    {
-                        "message": Constants.UNAUTHORIZED_MESSAGE,
-                        "code": Constants.UNAUTHORIZED,
-                    }
-                ),
-                Constants.UNAUTHORIZED,
-            )
 
-    return wrapper
+        return wrapper
+
+    return check_auth_function
 
 
 class JwtHandler:

@@ -58,6 +58,7 @@ class Address(db.Model):
 
     def serialize(self):
         return {
+            "address_id": self.id,
             "phone_number": self.phone_number,
             "birth_date": self.birth_date,
             "city": self.city,
