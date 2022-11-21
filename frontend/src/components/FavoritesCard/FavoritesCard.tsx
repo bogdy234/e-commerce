@@ -55,7 +55,12 @@ const FavoritesCard: FC<FavoritesCardProps> = ({
                         style={{ maxWidth: "18.75rem" }}
                     />
                     <div>
-                        <Typography variant="body2">{title}</Typography>
+                        <Typography
+                            variant="body2"
+                            align={matches ? "left" : "center"}
+                        >
+                            {title}
+                        </Typography>
                         <Stack direction="row" alignItems="center" gap={1}>
                             <Rating
                                 name="read-only"

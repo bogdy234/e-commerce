@@ -10,9 +10,6 @@ const Searchbar: FC<SearchbarProps> = () => {
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log({
-            search: data.get("search"),
-        });
     };
 
     return (

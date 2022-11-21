@@ -1,9 +1,5 @@
-import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
@@ -13,86 +9,22 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { CircularProgress } from "@mui/material";
 
-import ERRORS from "@constants/errors";
-import { isValidEmail, isValidPassword } from "@helpers/helpers";
 import { User } from "@interfaces/user";
-import { createUser } from "@api/user";
+import useRegisterMutation from "@hooks/user/useRegisterMutation";
 
 const SignUp = () => {
-    const [firstNameError, setFirstNameError] = useState<string>("");
-    const [lastNameError, setLastNameError] = useState<string>("");
-    const [emailError, setEmailError] = useState<string>("");
-    const [passwordError, setPasswordError] = useState<string>("");
-    const [confirmPasswordError, setConfirmPasswordError] =
-        useState<string>("");
-
-    const queryClient = useQueryClient();
-
-    const { mutate, isLoading } = useMutation(createUser, {
-        onSuccess: (data) => {
-            console.log(data);
-            const message = "success";
-            alert(message);
-        },
-        onError: () => {
-            alert("there was an error");
-        },
-        onSettled: () => {
-            queryClient.invalidateQueries({ queryKey: ["createUser"] });
-        },
-    });
-
-    const clearErrors = () => {
-        setEmailError("");
-        setPasswordError("");
-        setFirstNameError("");
-        setLastNameError("");
-        setConfirmPasswordError("");
-    };
-
-    const validateInputs = (
-        firstName: FormDataEntryValue | null,
-        lastName: FormDataEntryValue | null,
-        email: FormDataEntryValue | null,
-        password: FormDataEntryValue | null,
-        confirmPassword: FormDataEntryValue | null
-    ) => {
-        let isValid = true;
-        if (!firstName) {
-            setFirstNameError(ERRORS.NO_EMPTY_FIELD);
-            isValid = false;
-        }
-
-        if (!lastName) {
-            setLastNameError(ERRORS.NO_EMPTY_FIELD);
-            isValid = false;
-        }
-
-        if (!email) {
-            setEmailError(ERRORS.NO_EMPTY_FIELD);
-            isValid = false;
-        } else if (!isValidEmail(email as string)) {
-            setEmailError(ERRORS.INVALID_EMAIL);
-            isValid = false;
-        }
-
-        if (!password) {
-            setPasswordError(ERRORS.NO_EMPTY_FIELD);
-            isValid = false;
-        } else if (!isValidPassword(password as string)) {
-            setPasswordError(ERRORS.INVALID_PASSWORD);
-            isValid = false;
-        }
-
-        if (!confirmPassword) {
-            setConfirmPasswordError(ERRORS.NO_EMPTY_FIELD);
-            isValid = false;
-        } else if (password !== confirmPassword) {
-            setConfirmPasswordError(ERRORS.PASSWORDS_NOT_MATCH);
-            isValid = false;
-        }
-        return isValid;
-    };
+    const {
+        clearErrors,
+        confirmPasswordError,
+        emailError,
+        firstNameError,
+        formError,
+        lastNameError,
+        passwordError,
+        validateInputs,
+        mutate,
+        isLoading,
+    } = useRegisterMutation();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -126,7 +58,6 @@ const SignUp = () => {
 
     return (
         <Container component="main" maxWidth="xs">
-            <CssBaseline />
             <Box
                 sx={{
                     marginTop: 14,
@@ -216,6 +147,9 @@ const SignUp = () => {
                             />
                         </Grid>
                     </Grid>
+                    {formError && (
+                        <Typography color="error">{formError}</Typography>
+                    )}
                     <Button
                         type="submit"
                         fullWidth

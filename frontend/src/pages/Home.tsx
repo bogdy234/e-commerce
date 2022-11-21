@@ -4,7 +4,7 @@ import { Container } from "@mui/material";
 
 const Home: FC = () => {
     return (
-        <Container sx={{ mt: "90px" }} maxWidth={false}>
+        <Container sx={{ mt: 12 }} maxWidth={false}>
             <Counter />
         </Container>
     );
