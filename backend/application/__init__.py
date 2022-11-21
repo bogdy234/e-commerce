@@ -33,7 +33,7 @@ from models.Comments import Comments
 # Views
 from view.users.login_view import login
 from view.users.register_view import register
-from view.users.users_info import user_me, products_info, add_prod_comment, fav_prod
+from view.users.users_info import user_me, set_admin, set_user
 from view.products.get_products import get_products, get_product_by_id
 from view.products.add_products import add_product
 from view.products.update_products import update_product
