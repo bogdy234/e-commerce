@@ -4,6 +4,7 @@ from application import app
 from libs.JwtHandler import check_auth
 from models.Products import Product
 from models.Comments import Comments
+from models.Favourites import Favourites
 
 
 @app.route("/api/users/me", methods=["GET"])
@@ -44,3 +45,9 @@ def products_info():
         return jsonify(
             {"products": [product.serialize() for product in Product.query.all()]}
         )
+
+@app.route("/fav",methods = ["GET"])
+@check_auth
+def fav_prod(user):
+    f1 = Favourites.query.filter_by(user_id = user.cid)
+    return jsonify({"prods":[fav.serialize() for fav in f1]})

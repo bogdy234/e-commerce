@@ -15,6 +15,7 @@ class Constants:
     UNAUTHORIZED = 401
     UNAUTHORIZED_MESSAGE = "Auth required! Please log in!"
     REGISTRATION_SUCCESS = "Your account was created!"
+    USER_NOT_FOUND = "User not found in database!"
     DEFAULT_R0MANIA_VAT = 19
     DEFUALT_USER_GROUP = 1  # BASIC_USER
     INVALID_EMAIL_PATTERN = "Please use a valid email address!"
