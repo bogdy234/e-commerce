@@ -1,6 +1,7 @@
 from application import db
 from libs.constants import Category
 from models.Comments import Comments
+from decimal import Decimal
 
 
 class Product(db.Model):
@@ -47,12 +48,16 @@ class Product(db.Model):
             return True
         except:
             return False
+        
+    def calculate_discount_price(self,actual_price,discount):
+        return actual_price - round(Decimal(float((discount/100)) * float(actual_price)),2) if discount > 0 else actual_price
 
     def serialize(self):
         return {
             "pid": self.pid,
             "title": self.title,
             "price": self.price,
+            "price_with_discount" : self.calculate_discount_price(self.price,self.discount),
             "quantity": self.quantity,
             "discount": self.discount,
             "description": self.description,

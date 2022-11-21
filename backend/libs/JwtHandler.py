@@ -27,6 +27,12 @@ def check_auth(function):
             user = User.query.get(decoded_token.get("cid"))
             if user:
                 return function(user, *args, **kwargs)
+            return {
+                jsonify(
+                    {"message": Constants.USER_NOT_FOUND, "code":Constants.NOT_FOUND_CODE}
+                ),
+                Constants.NOT_FOUND_CODE
+            }
         else:
             return (
                 jsonify(
