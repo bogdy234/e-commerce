@@ -35,4 +35,4 @@ class Favourites(db.Model):
             return False
 
     def serialize(self):
-        return self.products.serialize()
+        return {"id": self.id, "product": self.products.serialize()}

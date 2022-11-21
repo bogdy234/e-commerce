@@ -41,6 +41,7 @@ class Comments(db.Model):
 
     def serialize(self):
         return {
+            "comment_id": self.id,
             "user": self.user.serialize(),
             "product_id": self.product_id,
             "title": self.title,
