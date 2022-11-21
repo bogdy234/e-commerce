@@ -14,7 +14,6 @@ def check_auth(func=None, admin=False):
     def check_auth_function(function):
         @wraps(function)
         def wrapper(*args, **kwargs):
-            print(admin)
             auth_token = request.headers.get("Authorization")
             if auth_token:
                 auth_token = auth_token.split("Bearer")[1].strip()
