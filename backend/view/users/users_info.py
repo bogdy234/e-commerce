@@ -8,13 +8,13 @@ from models.Favourites import Favourites
 
 
 @app.route("/api/users/me", methods=["GET"])
-@check_auth
+@check_auth()
 def user_me(user):
     return jsonify(user.serialize())
 
 
 @app.route("/prod", methods=["POST", "GET"])
-@check_auth
+@check_auth()
 def add_prod_comment(user):
     if request.method == "POST":
         c1 = Comments(user.cid, 4, "adsads", "dadsa", 4)
@@ -46,8 +46,9 @@ def products_info():
             {"products": [product.serialize() for product in Product.query.all()]}
         )
 
-@app.route("/fav",methods = ["GET"])
-@check_auth
+
+@app.route("/fav", methods=["GET"])
+@check_auth()
 def fav_prod(user):
-    f1 = Favourites.query.filter_by(user_id = user.cid)
-    return jsonify({"prods":[fav.serialize() for fav in f1]})
+    f1 = Favourites.query.filter_by(user_id=user.cid)
+    return jsonify({"prods": [fav.serialize() for fav in f1]})

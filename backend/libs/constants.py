@@ -3,6 +3,7 @@ import enum
 
 class Constants:
     DEFAULT_REGISTER_MESSAGE = "Error on register. Please try again!"
+    DEFAULT_PRODUCT_MESSAGE = "Error on adding new product. Please try again!"
     DUPLICATE_EMAIL_REGISTER = (
         "This email it's already used. Please try again with anothe email!"
     )
@@ -13,11 +14,13 @@ class Constants:
     NO_CONTENT = 204
     BAD_REQUEST = 400
     UNAUTHORIZED = 401
+    INTERNAL_SERVER_ERROR = 500
     UNAUTHORIZED_MESSAGE = "Auth required! Please log in!"
     REGISTRATION_SUCCESS = "Your account was created!"
     USER_NOT_FOUND = "User not found in database!"
     DEFAULT_R0MANIA_VAT = 19
     DEFUALT_USER_GROUP = 1  # BASIC_USER
+    ADMIN_ROLE = 2  # ADMIN ROLE
     INVALID_EMAIL_PATTERN = "Please use a valid email address!"
     USER_NOT_FOUND = "Password or email wrong! Please try again!"
     INVALID_JWT_TOKEN = "The JWT token it's invalid!"
@@ -26,6 +29,16 @@ class Constants:
     INVALID_PASSWORD = "Invalid password. Please try again!"
     LOGIN_SUCCESS = "Log in success!"
     BAD_REQUEST_MESSAGE = "Bad request, missing params: {}"
+    INVALID_CATEGORY = (
+        "You inserted a invalid category for the product. Category must be in: {}"
+    )
+    INVALID_DISCOUNT = "Discount must be in interval of 0-100"
+    INVALID_ARGUMENTS = "Invalid request. Missing arguments!"
+    SUCCES_PRODUCT = "Product was saved in our database!"
+    PRODUCT_NOT_FOUND = "Product not found in database!"
+    REQUIRED_ADMIN_ROLE = "To do this action you need admin role!"
+    PRODUCT_UPDATED = "Product updated successful!"
+    PRODUCT_DELETED = "Product with id : {} was deleted"
 
 
 class Category(enum.Enum):
