@@ -1,7 +1,7 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import useUser from "@hooks/user/useUser";
 
-const RequireAuth = ({ allowedRoles = ["BASIC_USER"] }) => {
+const RequireAuth = ({ allowedRoles = ["BASIC_USER", "ADMIN"] }) => {
     const { state } = useUser();
     const location = useLocation();
 

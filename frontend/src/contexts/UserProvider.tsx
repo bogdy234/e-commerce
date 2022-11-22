@@ -1,6 +1,6 @@
 import { createContext, FC, useReducer } from "react";
 
-import { SET_USER } from "@constants/user";
+import { RESET_USER, SET_USER } from "@constants/user";
 import { Action, UserContextType, UserState } from "@interfaces/user";
 
 interface UserProviderProps {
@@ -20,6 +20,11 @@ const userReducer = (state = initialState, action: Action) => {
             return {
                 ...state,
                 ...action.payload,
+            };
+        }
+        case RESET_USER: {
+            return {
+                ...initialState,
             };
         }
         default: {

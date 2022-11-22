@@ -14,45 +14,52 @@ import NavbarWrapper from "@components/NavbarWrapper";
 import Cart from "@pages/Cart";
 import RequireAuth from "@components/RequireAuth";
 import Unauthorized from "@pages/Unauthorized";
+import PersistLogin from "@components/PersistLogin";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <NavbarWrapper />,
+        element: <PersistLogin />,
         children: [
             {
                 path: "/",
-                element: <Home />,
-            },
-            {
-                path: "/signin",
-                element: <SignIn />,
-            },
-            {
-                path: "/signup",
-                element: <SignUp />,
-            },
-            {
-                path: "/",
-                element: <RequireAuth />,
+                element: <NavbarWrapper />,
                 children: [
                     {
-                        path: "favorites",
-                        element: <Favorites />,
+                        path: "/",
+                        element: <Home />,
                     },
                     {
-                        path: "profile",
-                        element: <Profile />,
+                        path: "/signin",
+                        element: <SignIn />,
                     },
                     {
-                        path: "cart",
-                        element: <Cart />,
+                        path: "/signup",
+                        element: <SignUp />,
+                    },
+                    {
+                        path: "/",
+                        element: <RequireAuth />,
+                        children: [
+                            {
+                                path: "favorites",
+                                element: <Favorites />,
+                            },
+                            {
+                                path: "profile",
+                                element: <Profile />,
+                            },
+                            {
+                                path: "cart",
+                                element: <Cart />,
+                            },
+                        ],
+                    },
+                    {
+                        path: "/unauthorized",
+                        element: <Unauthorized />,
                     },
                 ],
-            },
-            {
-                path: "/unauthorized",
-                element: <Unauthorized />,
             },
         ],
     },

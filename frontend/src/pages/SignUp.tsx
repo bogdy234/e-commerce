@@ -88,7 +88,9 @@ const SignUp = () => {
                                 id="firstName"
                                 label="First Name"
                                 autoFocus
-                                inputProps={{ maxLength: 50 }}
+                                inputProps={{
+                                    maxLength: 50,
+                                }}
                                 error={!!firstNameError}
                                 helperText={firstNameError}
                             />

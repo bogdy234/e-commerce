@@ -24,7 +24,7 @@ export interface UserActions {
     getUserData: (token: string) => Promise<User>;
 }
 
-export type UserActionTypes = "SET_USER";
+export type UserActionTypes = "SET_USER" | "RESET_USER";
 
 export interface UserState {
     user: User | null;
@@ -33,7 +33,7 @@ export interface UserState {
 
 export interface Action {
     type: UserActionTypes;
-    payload: UserState;
+    payload?: UserState;
 }
 
 export type Dispatch = (action: Action) => void;

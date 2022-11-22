@@ -8,35 +8,46 @@ import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
+import { Product } from "@interfaces/product";
 import { SCREEN_BREAKPOINTS } from "@constants";
 import FavoritesCard from "@components/FavoritesCard";
+import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
 
-interface FavoritesProps {}
+// const products = [
+//     {
+//         id: 1,
+//         title: "Product 1",
+//         rating: 4.5,
+//         noOfReviews: 100,
+//         imgUrl: "https://picsum.photos/200",
+//         normalPrice: 100,
+//         inStock: true,
+//         reducedPrice: 50,
+//     },
+//     {
+//         id: 2,
+//         title: "Product 2",
+//         rating: 4.5,
+//         noOfReviews: 100,
+//         imgUrl: "https://picsum.photos/200",
+//         normalPrice: 100,
+//         reducedPrice: 50,
+//     },
+// ];
 
-const products = [
-    {
-        id: 1,
-        title: "Product 1",
-        rating: 4.5,
-        noOfReviews: 100,
-        imgUrl: "https://picsum.photos/200",
-        normalPrice: 100,
-        inStock: true,
-        reducedPrice: 50,
-    },
-    {
-        id: 2,
-        title: "Product 2",
-        rating: 4.5,
-        noOfReviews: 100,
-        imgUrl: "https://picsum.photos/200",
-        normalPrice: 100,
-        reducedPrice: 50,
-    },
-];
-
-const Favorites: FC<FavoritesProps> = (): ReactElement => {
+const Favorites: FC = (): ReactElement => {
+    const {
+        isLoading,
+        favoriteProducts,
+        favoriteProductsNumber,
+        mutateDelete,
+        isLoadingDelete,
+    } = useFavoriteProducts();
     const matches = useMediaQuery(`(min-width:${SCREEN_BREAKPOINTS.md})`);
+
+    const onClickRemove = (id: number) => {
+        mutateDelete(id);
+    };
 
     return (
         <Container sx={{ mt: 12 }} maxWidth={matches ? "xl" : "sm"}>
@@ -45,27 +56,36 @@ const Favorites: FC<FavoritesProps> = (): ReactElement => {
             >
                 <Stack direction="row" gap={3} alignItems="center">
                     <Typography variant="h6">Favorites </Typography>
-                    <Typography variant="body2">2 products</Typography>
+                    <Typography variant="body2">
+                        {favoriteProductsNumber}{" "}
+                        {favoriteProductsNumber === 1 ? "product" : "products"}
+                    </Typography>
                 </Stack>
                 <Divider light />
-                {products.map((product) => (
-                    <FavoritesCard
-                        title={product.title}
-                        rating={product.rating}
-                        noOfReviews={product.noOfReviews}
-                        imgUrl={product.imgUrl}
-                        normalPrice={product.normalPrice}
-                        inStock={product.inStock || false}
-                        reducedPrice={product.reducedPrice}
-                        onClickRemove={() =>
-                            console.log(`${product.title} removed`)
-                        }
-                        onClickAddToCart={() =>
-                            console.log(`${product.title} added to cart`)
-                        }
-                        key={`favorite-product-${product.id}`}
-                    />
-                ))}
+                {isLoading ? (
+                    <h1>Loading...</h1>
+                ) : (
+                    favoriteProducts?.map(
+                        ({ product, id }: { product: Product; id: number }) => (
+                            <FavoritesCard
+                                title={product.title}
+                                rating={product.rating || 5}
+                                noOfReviews={product.noOfReviews || 0}
+                                imgUrl={product.imgUrl}
+                                normalPrice={product.price}
+                                inStock={product.quantity > 0}
+                                reducedPrice={product.price_with_discount}
+                                onClickRemove={() => onClickRemove(id)}
+                                onClickAddToCart={() =>
+                                    console.log(
+                                        `${product.title} added to cart`
+                                    )
+                                }
+                                key={`favorite-product-${product.pid}`}
+                            />
+                        )
+                    )
+                )}
             </Box>
         </Container>
     );

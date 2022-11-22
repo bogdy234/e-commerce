@@ -6,6 +6,7 @@ import Searchbar from "@components/Searchbar";
 import { NavOption } from "@interfaces/navbar";
 import { SCREEN_BREAKPOINTS } from "@constants";
 import useUser from "@hooks/user/useUser";
+import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
 
 import {
     AppBar,
@@ -22,54 +23,69 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { useQueryClient } from "@tanstack/react-query";
 
-interface NavbarProps {}
+const loggedInOptions = [
+    {
+        icon: <PersonIcon />,
+        label: "Profile",
+        href: "/profile",
+    },
+    { icon: <FavoriteIcon />, label: "Favorites", href: "/favorites" },
+    { icon: <ShoppingCartIcon />, label: "My Cart", href: "/cart" },
+    { icon: <LogoutIcon />, label: "Logout", href: "/" },
+];
 
-const Navbar: FC<NavbarProps> = () => {
+const loggedOutOptions = [
+    { icon: <PersonIcon />, label: "Login", href: "/signin" },
+];
+
+const Navbar: FC = () => {
+    const queryClient = useQueryClient();
     const matches = useMediaQuery(`(min-width:${SCREEN_BREAKPOINTS.md})`);
     const { state, dispatch } = useUser();
-    const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+    const [, , removeCookie] = useCookies(["token"]);
+    const { isLoading, favoriteProductsNumber } = useFavoriteProducts();
 
-    const [options, setOptions] = useState<NavOption[]>([
-        { icon: <PersonIcon />, label: "Login", href: "/signin" },
-        { icon: <FavoriteIcon />, label: "Favorites", href: "/favorites" },
-        { icon: <ShoppingCartIcon />, label: "My Cart", href: "/cart" },
-    ]);
+    const [options, setOptions] = useState<NavOption[]>([]);
 
     useEffect(() => {
-        if (state?.token) {
-            const newOptions = [...options];
-            newOptions[0] = {
-                icon: <PersonIcon />,
-                label: "Profile",
-                href: "/profile",
-            };
-            newOptions[3] = {
-                icon: <LogoutIcon />,
-                label: "Logout",
-                href: "/",
-            };
-            setOptions(newOptions);
-        } else {
-            let newOptions = [...options];
-            newOptions[0] = {
-                icon: <PersonIcon />,
-                label: "Login",
-                href: "/signin",
-            };
-            newOptions = newOptions.filter((option, index) => index !== 3);
-            setOptions(newOptions);
-        }
-    }, [cookies]);
+        setOptions(state?.token ? loggedInOptions : loggedOutOptions);
+    }, [state?.token]);
 
-    const getIcons = (icon: ReactElement, showBadge: boolean) => {
-        return showBadge ? (
-            <Badge badgeContent={4} color="secondary" overlap="circular">
-                {icon}
-            </Badge>
-        ) : (
-            <>{icon}</>
-        );
+    const getIcons = (
+        icon: ReactElement,
+        showBadge: boolean,
+        label: string
+    ) => {
+        if (label === "Favorites") {
+            return (
+                !isLoading &&
+                showBadge && (
+                    <Badge
+                        badgeContent={favoriteProductsNumber}
+                        color="secondary"
+                        overlap="circular"
+                    >
+                        {icon}
+                    </Badge>
+                )
+            );
+        } else if (label === "Cart") {
+            return (
+                false &&
+                showBadge && (
+                    <Badge
+                        badgeContent={favoriteProductsNumber}
+                        color="secondary"
+                        overlap="circular"
+                    >
+                        {icon}
+                    </Badge>
+                )
+            );
+        }
+        return <>{icon}</>;
     };
 
     const onClick = (label: string) => {
@@ -78,6 +94,7 @@ const Navbar: FC<NavbarProps> = () => {
         }
         dispatch({ type: "SET_USER", payload: { user: null, token: "" } });
         removeCookie("token");
+        queryClient.removeQueries(["favoriteProducts"]);
     };
 
     return (
@@ -100,7 +117,10 @@ const Navbar: FC<NavbarProps> = () => {
                                 >
                                     {getIcons(
                                         icon,
-                                        ["Favorites", "My Cart"].includes(label)
+                                        ["Favorites", "My Cart"].includes(
+                                            label
+                                        ),
+                                        label
                                     )}
                                     {matches && (
                                         <Typography variant="caption">

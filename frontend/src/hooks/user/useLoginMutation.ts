@@ -13,7 +13,7 @@ const useLoginMutation = () => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     const { dispatch } = useUser();
-    const [cookies, setCookie] = useCookies(["token"]);
+    const [, setCookie] = useCookies(["token"]);
     const [formError, setFormError] = useState<string>("");
     const [emailError, setEmailError] = useState<string>("");
     const [passwordError, setPasswordError] = useState<string>("");

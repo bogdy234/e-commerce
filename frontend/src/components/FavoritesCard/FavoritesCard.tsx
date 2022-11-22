@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import Divider from "@mui/material/Divider";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Box, Button } from "@mui/material";
+import { Button } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import theme from "@theme";

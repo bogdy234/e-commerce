@@ -1,5 +1,4 @@
 import { FC, FormEvent, useEffect } from "react";
-import { useCookies } from "react-cookie";
 
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -16,9 +15,12 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import { UserLoginParams } from "@interfaces/user";
 import useLoginMutation from "@hooks/user/useLoginMutation";
+import useUser from "@hooks/user/useUser";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const SignIn: FC = () => {
-    const [cookies, setCookie] = useCookies(["token"]);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const {
         clearErrors,
@@ -29,6 +31,14 @@ const SignIn: FC = () => {
         isLoading,
         validateInputs,
     } = useLoginMutation();
+
+    const { state } = useUser();
+
+    useEffect(() => {
+        if (state?.user) {
+            navigate(location.state.from);
+        }
+    }, [state?.user]);
 
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
