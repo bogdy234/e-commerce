@@ -15,7 +15,6 @@ class ProductController:
             kwargs.get("title"),
             kwargs.get("price"),
             kwargs.get("quantity"),
-            kwargs.get("discount"),
             kwargs.get("description"),
             kwargs.get("imgUrl"),
             kwargs.get("category"),
@@ -30,7 +29,8 @@ class ProductController:
         }
         list_categories = [category.value for category in Category]
         valid_arguments = self.check_arguments(**kwargs)
-        if not valid_arguments:
+        if not valid_arguments or kwargs.get("discount") == None:
+            print("asdaas")
             dict_products["message"] = Constants.INVALID_ARGUMENTS
             dict_products["code"] = Constants.INTERNAL_SERVER_ERROR
             return dict_products
@@ -79,7 +79,7 @@ class ProductController:
             product.price = kwargs.get("price")
         if kwargs.get("quantity"):
             product.quantity = kwargs.get("quantity")
-        if kwargs.get("discount"):
+        if kwargs.get("discount") != None:
             if kwargs.get("discount") > Decimal(100):
                 dict_products["message"] = Constants.INVALID_DISCOUNT
                 dict_products["code"] = Constants.BAD_REQUEST
