@@ -31,9 +31,26 @@ def comments_handle(user):
         )
         return jsonify(data_comment), data_comment.get("code", 500)
     if request.method == "PUT":
-        pass
+        comment_id = request.json.get("comment_id")
+        title = request.json.get("title")
+        rating = request.json.get("rating")
+        description = request.json.get("description")
+        data_update = CommentsController().update_comment(
+            user_id=user.cid,
+            title=title,
+            comment_id=comment_id,
+            rating=rating,
+            description=description,
+        )
+        return jsonify(data_update), data_update.get("code", 500)
     if request.method == "DELETE":
         admin = True if user.role.rid == Constants.ADMIN_ROLE else False
         comment_id = request.json.get("comment_id")
         data_delete = CommentsController().delete_comment(comment_id, user.cid, admin)
         return jsonify(data_delete), data_delete.get("code", 500)
+
+
+@app.route("/api/products/comments/me", methods=["GET"])
+@check_auth()
+def get_user_comments(user):
+    return jsonify(CommentsController().get_user_comments(user.cid))

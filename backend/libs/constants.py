@@ -11,7 +11,7 @@ class Constants:
         "Error on adding comment to product. Please try again!"
     )
     DEFAULT_DELETE_COMMENT_PRODUCT = (
-        "Error on deletint comment to product. Please try again!"
+        "Error on delete comment to product. Please try again!"
     )
     DEFAULT_DELETE_FAVOURITE_PRODUCT = (
         "Error on delete the product from favourite! Please try again!"
@@ -63,7 +63,7 @@ class Constants:
     INVALID_COMMENT_RATING = "Rating must be in interval of 0-5"
     COMMENT_SAVED = "Commend saved to the product!"
     COMMENT_NOT_FOUND = "Comment not found in the database!"
-    COMMENT_NOT_FOR_THIS_USER = "You can't delete this comment, it's not your comment!"
+    COMMENT_NOT_FOR_THIS_USER = "You can't handle this comment, it's not your comment!"
     COMMENT_DELETED = "Comment was deleted!"
 
 

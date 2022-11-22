@@ -96,3 +96,45 @@ class CommentsController:
             comment.serialize()
             for comment in Comments.query.filter_by(product_id=product_id).all()
         ]
+
+    def update_comment(self, **kwargs):
+        dict_update = {
+            "message": Constants.DEFAULT_ADD_COMMENT_PRODUCT,
+            "code": Constants.NO_CONTENT,
+            "comment": None,
+        }
+        comment = self.check_if_comment_exist(kwargs.get("comment_id"))
+        user_comment = self.check_if_comment_apartain_to_user(
+            kwargs.get("comment_id"), kwargs.get("user_id")
+        )
+        if not user_comment:
+            dict_update["message"] = Constants.COMMENT_NOT_FOR_THIS_USER
+            dict_update["code"] = Constants.UNAUTHORIZED
+            return dict_update
+        if not comment:
+            dict_update["message"] = Constants.COMMENT_NOT_FOUND
+            dict_update["code"] = Constants.NOT_FOUND_CODE
+            return dict_update
+        if kwargs.get("title"):
+            comment.title = kwargs.get("title")
+        if kwargs.get("description"):
+            comment.desciption = kwargs.get("description")
+        if kwargs.get("rating"):
+            if not 0 < kwargs.get("rating") <= 5:
+                dict_update["message"] = Constants.INVALID_COMMENT_RATING
+                dict_update["code"] = Constants.BAD_REQUEST
+                return dict_update
+            comment.rating = kwargs.get("rating")
+        comment_saved = comment.save()
+        if comment_saved:
+            dict_update["message"] = Constants.COMMENT_SAVED
+            dict_update["code"] = Constants.SUCCES_CODE
+            dict_update["comment"] = comment.serialize()
+            return dict_update
+        return dict_update
+
+    def get_user_comments(self, user_id):
+        return [
+            comments.serialize()
+            for comments in Comments.query.filter_by(user_id=user_id)
+        ]
