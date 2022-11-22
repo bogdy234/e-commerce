@@ -19,7 +19,7 @@ class FavouritesController:
     def add_favourite_product(self, user_id, product_id):
         dict_favourites = {
             "message": Constants.DEFAULT_FAVOURITE_PRODUCT,
-            "code": Constants.INTERNAL_SERVER_ERROR,
+            "code": Constants.NO_CONTENT,
             "fav_product": None,
         }
         fav_prod_exist = self.check_fav_prod(user_id, product_id)
@@ -47,7 +47,7 @@ class FavouritesController:
     def delete_favourite_product(self, favourite_id, user_id):
         dict_delete_fav = {
             "message": Constants.DEFAULT_DELETE_FAVOURITE_PRODUCT,
-            "code": Constants.INTERNAL_SERVER_ERROR,
+            "code": Constants.NO_CONTENT,
         }
         user_favourite = self.check_user_favourite(favourite_id, user_id)
         if not user_favourite:
@@ -61,3 +61,9 @@ class FavouritesController:
             dict_delete_fav["code"] = Constants.SUCCES_CODE
             return dict_delete_fav
         return dict_delete_fav
+
+    def get_favourites_products(self, user):
+        return [
+            fav_prod.serialize()
+            for fav_prod in Favourites.query.filter_by(user_id=user.cid)
+        ]

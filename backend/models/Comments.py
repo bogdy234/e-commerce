@@ -42,7 +42,7 @@ class Comments(db.Model):
     def serialize(self):
         return {
             "comment_id": self.id,
-            "user": self.user.serialize(),
+            "user": self.user.serialize_without_address(),
             "product_id": self.product_id,
             "title": self.title,
             "description": self.description,

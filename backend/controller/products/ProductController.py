@@ -104,3 +104,35 @@ class ProductController:
             dict_products["product"] = product.serialize()
             return dict_products
         return dict_products
+
+    def delete(self, product_id):
+        dict_delete = {
+            "message": Constants.DEFAULT_PRODUCT_MESSAGE,
+            "code": Constants.INTERNAL_SERVER_ERROR,
+        }
+        product = Product.query.get(product_id)
+        if not product:
+            dict_delete["message"] = Constants.PRODUCT_NOT_FOUND
+            dict_delete["code"] = Constants.NOT_FOUND_CODE
+            return dict_delete
+        data_deleted = product.delete()
+        if data_deleted:
+            dict_delete["message"] = Constants.PRODUCT_DELETED
+            dict_delete["code"] = Constants.SUCCES_CODE
+            return dict_delete
+        return dict_delete
+
+    def get_all_products(self):
+        return [product.serialize() for product in Product.query.all()]
+
+    def get_product_by_id(self, product_id):
+        dict_product = {
+            "message": Constants.DEFAULT_PRODUCT_MESSAGE,
+            "code": Constants.INTERNAL_SERVER_ERROR,
+        }
+        product = Product.query.get(product_id)
+        if not product:
+            dict_product["message"] = Constants.PRODUCT_NOT_FOUND
+            dict_product["code"] = Constants.NOT_FOUND_CODE
+            return dict_product
+        return product.serialize()
