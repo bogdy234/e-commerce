@@ -7,6 +7,9 @@ class Constants:
     DEFAULT_FAVOURITE_PRODUCT = (
         "Error on adding the product to favourite. Please try again!"
     )
+    DEFAULT_ADD_COMMENT_PRODUCT = (
+        "Error on adding comment to product. Please try again!"
+    )
     DEFAULT_DELETE_FAVOURITE_PRODUCT = (
         "Error on delete the product from favourite! Please try again!"
     )
@@ -54,6 +57,8 @@ class Constants:
     FAVOURITE_PRODUCT_NOT_YOURS = "This product it's not in your favourite list!"
     FAVOURITE_PRODUCT_DELETED = "Your product from favourite was deleted!"
     BLACKLIST_TOKEN_FILE = "blacklist_tokens.json"
+    INVALID_COMMENT_RATING = "Rating must be in interval of 0-5"
+    COMMENT_SAVED = "Commend saved to the product!"
 
 
 class Category(enum.Enum):

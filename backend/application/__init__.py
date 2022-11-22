@@ -39,3 +39,4 @@ from view.products.add_products import add_product
 from view.products.update_products import update_product
 from view.products.fav_prods import favourite_prod
 from view.users.logout_view import logout
+from view.products.comments import get_comments_by_product_id, comments_handle

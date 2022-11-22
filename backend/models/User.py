@@ -56,3 +56,14 @@ class User(db.Model):
             "registered_date": self.registered_date,
             "vat": self.vat,
         }
+
+    def serialize_without_address(self):
+        return {
+            "cid": self.cid,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "email": self.email,
+            "role": self.role.serialize(),
+            "registered_date": self.registered_date,
+            "vat": self.vat,
+        }
