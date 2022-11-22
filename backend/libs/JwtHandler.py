@@ -2,6 +2,8 @@ from datetime import datetime, timedelta, timezone
 from functools import wraps
 
 import jwt
+import json
+import os
 from flask import jsonify, request
 
 from application import SECRET_KEY
@@ -17,11 +19,23 @@ def check_auth(admin=False):
             auth_token = request.headers.get("Authorization")
             if auth_token:
                 auth_token = auth_token.split("Bearer")[1].strip()
+                if JwtHandler.get_blacklist_token(auth_token):
+                    return (
+                        {
+                            "message": Constants.BLACKLIST_TOKEN,
+                            "code": Constants.UNAUTHORIZED,
+                            "is_token_problem": True,
+                        }
+                    ), Constants.UNAUTHORIZED
                 token_valability, token_status = JwtHandler.check_valability(auth_token)
                 if not token_status:
                     return (
                         jsonify(
-                            {"message": token_valability, "code": Constants.BAD_REQUEST}
+                            {
+                                "message": token_valability,
+                                "code": Constants.BAD_REQUEST,
+                                "is_token_problem": True,
+                            }
                         ),
                         Constants.BAD_REQUEST,
                     )
@@ -35,6 +49,7 @@ def check_auth(admin=False):
                                     {
                                         "message": Constants.REQUIRED_ADMIN_ROLE,
                                         "code": Constants.UNAUTHORIZED,
+                                        "is_token_problem": True,
                                     }
                                 ),
                                 Constants.UNAUTHORIZED,
@@ -45,6 +60,7 @@ def check_auth(admin=False):
                         {
                             "message": Constants.USER_NOT_FOUND,
                             "code": Constants.NOT_FOUND_CODE,
+                            "is_token_problem": True,
                         }
                     ),
                     Constants.NOT_FOUND_CODE,
@@ -55,6 +71,7 @@ def check_auth(admin=False):
                         {
                             "message": Constants.UNAUTHORIZED_MESSAGE,
                             "code": Constants.UNAUTHORIZED,
+                            "is_token_problem": True,
                         }
                     ),
                     Constants.UNAUTHORIZED,
@@ -96,3 +113,32 @@ class JwtHandler:
         if decoded_token["expiration"] < datetime.timestamp(datetime.now()):
             return Constants.EXPIRED_JWT_TOKEN, False
         return Constants.VALID_JWT_TOKEN, True
+
+    @staticmethod
+    def create_blacklist_file():
+        if not os.path.exists(Constants.BLACKLIST_TOKEN_FILE):
+            with open(Constants.BLACKLIST_TOKEN_FILE, "wt") as file:
+                file.write("{}")
+
+    @staticmethod
+    def get_all_blacklist_tokens():
+        JwtHandler.create_blacklist_file()
+        with open(Constants.BLACKLIST_TOKEN_FILE) as blacklist_file:
+            return json.load(blacklist_file)
+
+    @staticmethod
+    def get_blacklist_token(token):
+        JwtHandler.create_blacklist_file()
+        with open(Constants.BLACKLIST_TOKEN_FILE) as blacklist_file:
+            tokens_blacklist = json.load(blacklist_file)
+            return tokens_blacklist.get(token, False)
+
+    @staticmethod
+    def add_token_to_blacklist(token):
+        if JwtHandler.get_blacklist_token(token):
+            return {"message": Constants.LOGOUT_SUCCESS, "code": Constants.SUCCES_CODE}
+        tokens_blacklist = JwtHandler.get_all_blacklist_tokens()
+        with open(Constants.BLACKLIST_TOKEN_FILE, "wt") as blacklist_file:
+            tokens_blacklist[token] = "True"
+            blacklist_file.write(json.dumps(tokens_blacklist))
+        return {"message": Constants.LOGOUT_SUCCESS, "code": Constants.SUCCES_CODE}

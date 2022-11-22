@@ -38,3 +38,4 @@ from view.products.get_products import get_products, get_product_by_id
 from view.products.add_products import add_product
 from view.products.update_products import update_product
 from view.products.fav_prods import favourite_prod
+from view.users.logout_view import logout

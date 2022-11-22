@@ -30,6 +30,8 @@ class Constants:
     INVALID_EMAIL_PATTERN = "Please use a valid email address!"
     USER_NOT_FOUND = "Password or email wrong! Please try again!"
     INVALID_JWT_TOKEN = "The JWT token it's invalid!"
+    BLACKLIST_TOKEN = "Token in blacklist, please try again to log in!"
+    LOGOUT_SUCCESS = "Log-out with success!"
     EXPIRED_JWT_TOKEN = "The JWT token has expired!"
     VALID_JWT_TOKEN = "Valid token!"
     INVALID_PASSWORD = "Invalid password. Please try again!"
@@ -51,6 +53,7 @@ class Constants:
     FAVOURITE_PRODUCT_SAVED = "The product was saved in favourites!"
     FAVOURITE_PRODUCT_NOT_YOURS = "This product it's not in your favourite list!"
     FAVOURITE_PRODUCT_DELETED = "Your product from favourite was deleted!"
+    BLACKLIST_TOKEN_FILE = "blacklist_tokens.json"
 
 
 class Category(enum.Enum):

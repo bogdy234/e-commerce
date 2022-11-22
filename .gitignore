@@ -110,3 +110,4 @@ dist
 __pycache__
 *.rar
 db-data
+blacklist_tokens.json
