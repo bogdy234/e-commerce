@@ -24,13 +24,18 @@ def check_auth(admin=False):
                         {
                             "message": Constants.BLACKLIST_TOKEN,
                             "code": Constants.UNAUTHORIZED,
+                            "is_token_problem": True,
                         }
                     ), Constants.UNAUTHORIZED
                 token_valability, token_status = JwtHandler.check_valability(auth_token)
                 if not token_status:
                     return (
                         jsonify(
-                            {"message": token_valability, "code": Constants.BAD_REQUEST}
+                            {
+                                "message": token_valability,
+                                "code": Constants.BAD_REQUEST,
+                                "is_token_problem": True,
+                            }
                         ),
                         Constants.BAD_REQUEST,
                     )
@@ -44,6 +49,7 @@ def check_auth(admin=False):
                                     {
                                         "message": Constants.REQUIRED_ADMIN_ROLE,
                                         "code": Constants.UNAUTHORIZED,
+                                        "is_token_problem": True,
                                     }
                                 ),
                                 Constants.UNAUTHORIZED,
@@ -54,6 +60,7 @@ def check_auth(admin=False):
                         {
                             "message": Constants.USER_NOT_FOUND,
                             "code": Constants.NOT_FOUND_CODE,
+                            "is_token_problem": True,
                         }
                     ),
                     Constants.NOT_FOUND_CODE,
@@ -64,6 +71,7 @@ def check_auth(admin=False):
                         {
                             "message": Constants.UNAUTHORIZED_MESSAGE,
                             "code": Constants.UNAUTHORIZED,
+                            "is_token_problem": True,
                         }
                     ),
                     Constants.UNAUTHORIZED,
@@ -127,6 +135,8 @@ class JwtHandler:
 
     @staticmethod
     def add_token_to_blacklist(token):
+        if JwtHandler.get_blacklist_token(token):
+            return {"message": Constants.LOGOUT_SUCCESS, "code": Constants.SUCCES_CODE}
         tokens_blacklist = JwtHandler.get_all_blacklist_tokens()
         with open(Constants.BLACKLIST_TOKEN_FILE, "wt") as blacklist_file:
             tokens_blacklist[token] = "True"

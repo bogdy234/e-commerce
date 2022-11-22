@@ -11,3 +11,4 @@ def logout():
             token = token.split(" ")[1]
             data = JwtHandler.add_token_to_blacklist(token=token)
             return jsonify(data), data.get("code", 500)
+    return jsonify({"message": "Unknown error"}), 500
