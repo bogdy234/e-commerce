@@ -1,18 +1,16 @@
 from application import app
 from flask import jsonify, request
 from libs.JwtHandler import check_auth
-from models.Comments import Comments
 from libs.constants import Constants
 from controller.products.CommentsController import CommentsController
 
 
 @app.route("/api/products/comments/<int:product_id>", methods=["GET"])
 def get_comments_by_product_id(product_id):
-    return jsonify(
-        [
-            comment.serialize()
-            for comment in Comments.query.filter_by(product_id=product_id)
-        ]
+    data_products = CommentsController().get_comment_by_prod_id(product_id)
+    return (
+        jsonify(data_products),
+        data_products.get("code") if type(data_products) is dict else 200,
     )
 
 
@@ -35,8 +33,7 @@ def comments_handle(user):
     if request.method == "PUT":
         pass
     if request.method == "DELETE":
-        if user.role_id == Constants.ADMIN_ROLE:
-            # Can delete all the comments
-            pass
-        # Start delete only for your comment
-        pass
+        admin = True if user.role.rid == Constants.ADMIN_ROLE else False
+        comment_id = request.json.get("comment_id")
+        data_delete = CommentsController().delete_comment(comment_id, user.cid, admin)
+        return jsonify(data_delete), data_delete.get("code", 500)

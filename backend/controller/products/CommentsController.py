@@ -25,6 +25,12 @@ class CommentsController:
     def check_if_user_exist(self, user_id):
         return User.query.get(user_id)
 
+    def check_if_comment_exist(self, comment_id):
+        return Comments.query.get(comment_id)
+
+    def check_if_comment_apartain_to_user(self, comment_id, user_id):
+        return Comments.query.filter_by(user_id=user_id, id=comment_id).all()
+
     def add_comment(self, **kwargs):
         dict_comments = {
             "message": Constants.DEFAULT_ADD_COMMENT_PRODUCT,
@@ -56,3 +62,37 @@ class CommentsController:
             dict_comments["comment"] = comment.serialize()
             return dict_comments
         return dict_comments
+
+    def delete_comment(self, comment_id, user_id, admin=False):
+        dict_delete = {
+            "message": Constants.DEFAULT_DELETE_COMMENT_PRODUCT,
+            "code": Constants.NO_CONTENT,
+        }
+        if not self.check_if_comment_exist(comment_id):
+            dict_delete["message"] = Constants.COMMENT_NOT_FOUND
+            dict_delete["code"] = Constants.NOT_FOUND_CODE
+            return dict_delete
+        if not admin:
+            user_comment = self.check_if_comment_apartain_to_user(comment_id, user_id)
+            if not user_comment:
+                dict_delete["message"] = Constants.COMMENT_NOT_FOR_THIS_USER
+                dict_delete["code"] = Constants.UNAUTHORIZED
+                return dict_delete
+        comment = Comments.query.get(comment_id)
+        data_deleted = comment.delete()
+        if data_deleted:
+            dict_delete["message"] = Constants.COMMENT_DELETED
+            dict_delete["code"] = Constants.SUCCES_CODE
+            return dict_delete
+        return dict_delete
+
+    def get_comment_by_prod_id(self, product_id):
+        if not self.check_product_if_exist(product_id):
+            return {
+                "message": Constants.PRODUCT_NOT_FOUND,
+                "code": Constants.NOT_FOUND_CODE,
+            }
+        return [
+            comment.serialize()
+            for comment in Comments.query.filter_by(product_id=product_id).all()
+        ]

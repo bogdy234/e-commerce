@@ -1,6 +1,5 @@
 from application import app
 from libs.JwtHandler import check_auth
-from models.Favourites import Favourites
 from flask import request, jsonify
 from controller.products.FavouritesController import FavouritesController
 
@@ -9,8 +8,7 @@ from controller.products.FavouritesController import FavouritesController
 @check_auth()
 def favourite_prod(user):
     if request.method == "GET":
-        favourites_prods = Favourites.query.filter_by(user_id=user.cid)
-        return jsonify([fav_prod.serialize() for fav_prod in favourites_prods])
+        return jsonify(FavouritesController().get_favourites_products(user))
     if request.method == "POST":
         product_id = request.json.get("product_id")
         data_fav = FavouritesController().add_favourite_product(
