@@ -14,7 +14,6 @@ class ProductController:
         list_args = [
             kwargs.get("title"),
             kwargs.get("price"),
-            kwargs.get("quantity"),
             kwargs.get("description"),
             kwargs.get("imgUrl"),
             kwargs.get("category"),
@@ -77,7 +76,11 @@ class ProductController:
             product.title = kwargs.get("title")
         if kwargs.get("price"):
             product.price = kwargs.get("price")
-        if kwargs.get("quantity"):
+        if kwargs.get("quantity") != None:
+            if kwargs.get("quantity") < 0:
+                dict_products["message"] = Constants.INVALID_QUANTITY
+                dict_products["code"] = Constants.BAD_REQUEST
+                return dict_products
             product.quantity = kwargs.get("quantity")
         if kwargs.get("discount") != None:
             if kwargs.get("discount") > Decimal(100):
