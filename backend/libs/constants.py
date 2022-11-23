@@ -65,6 +65,7 @@ class Constants:
     COMMENT_NOT_FOUND = "Comment not found in the database!"
     COMMENT_NOT_FOR_THIS_USER = "You can't handle this comment, it's not your comment!"
     COMMENT_DELETED = "Comment was deleted!"
+    COMMENT_ALREADY_ADDED = "You already added a comment!"
     INVALID_QUANTITY = "Quantity must by higher than 0"
 
 

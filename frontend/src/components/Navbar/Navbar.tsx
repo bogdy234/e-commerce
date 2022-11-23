@@ -7,6 +7,7 @@ import { NavOption } from "@interfaces/navbar";
 import { SCREEN_BREAKPOINTS } from "@constants";
 import useUser from "@hooks/user/useUser";
 import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
+import useRefreshToken from "@hooks/user/useRefreshToken";
 
 import {
     AppBar,
@@ -46,10 +47,14 @@ const Navbar: FC = () => {
     const { state, dispatch } = useUser();
     const [, , removeCookie] = useCookies(["token"]);
     const { isLoading, favoriteProductsNumber } = useFavoriteProducts();
+    const { isLoading: isLoadingUserData } = useRefreshToken();
 
     const [options, setOptions] = useState<NavOption[]>([]);
 
     useEffect(() => {
+        if (isLoadingUserData) {
+            return;
+        }
         setOptions(state?.token ? loggedInOptions : loggedOutOptions);
     }, [state?.token]);
 
@@ -60,10 +65,9 @@ const Navbar: FC = () => {
     ) => {
         if (label === "Favorites") {
             return (
-                !isLoading &&
                 showBadge && (
                     <Badge
-                        badgeContent={favoriteProductsNumber}
+                        badgeContent={isLoading ? 0 : favoriteProductsNumber}
                         color="secondary"
                         overlap="circular"
                     >

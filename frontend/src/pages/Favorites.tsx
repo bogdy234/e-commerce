@@ -12,6 +12,8 @@ import { Product } from "@interfaces/product";
 import { SCREEN_BREAKPOINTS } from "@constants";
 import FavoritesCard from "@components/FavoritesCard";
 import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
+import { getMeanRatingComments } from "@helpers/helpers";
+import { Skeleton } from "@mui/material";
 
 // const products = [
 //     {
@@ -34,6 +36,8 @@ import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
 //         reducedPrice: 50,
 //     },
 // ];
+
+const skeletonIds = [1, 2];
 
 const Favorites: FC = (): ReactElement => {
     const {
@@ -62,28 +66,31 @@ const Favorites: FC = (): ReactElement => {
                     </Typography>
                 </Stack>
                 <Divider light />
-                {isLoading ? (
-                    <h1>Loading...</h1>
-                ) : (
-                    favoriteProducts?.map(
-                        ({ product, id }: { product: Product; id: number }) => (
-                            <FavoritesCard
-                                title={product.title}
-                                rating={product.rating || 5}
-                                noOfReviews={product.noOfReviews || 0}
-                                imgUrl={product.imgUrl}
-                                normalPrice={product.price}
-                                inStock={product.quantity > 0}
-                                reducedPrice={product.price_with_discount}
-                                onClickRemove={() => onClickRemove(id)}
-                                onClickAddToCart={() =>
-                                    console.log(
-                                        `${product.title} added to cart`
-                                    )
-                                }
-                                key={`favorite-product-${product.pid}`}
-                            />
-                        )
+                {isLoading &&
+                    skeletonIds.map((id) => (
+                        <Skeleton
+                            sx={{ height: 300 }}
+                            animation="wave"
+                            variant="rectangular"
+                            key={`skeleton-${id}`}
+                        />
+                    ))}
+                {favoriteProducts?.map(
+                    ({ product, id }: { product: Product; id: number }) => (
+                        <FavoritesCard
+                            title={product.title}
+                            rating={getMeanRatingComments(product.comments)}
+                            noOfReviews={product.comments.length}
+                            imgUrl={product.imgUrl}
+                            normalPrice={product.price}
+                            inStock={product.quantity > 0}
+                            reducedPrice={product.price_with_discount}
+                            onClickRemove={() => onClickRemove(id)}
+                            addToCart={() =>
+                                console.log(`${product.title} added to cart`)
+                            }
+                            key={`favorite-product-${product.pid}`}
+                        />
                     )
                 )}
             </Box>

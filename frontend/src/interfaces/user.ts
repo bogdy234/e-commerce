@@ -28,7 +28,7 @@ export type UserActionTypes = "SET_USER" | "RESET_USER";
 
 export interface UserState {
     user: User | null;
-    token: string;
+    token: string | null;
 }
 
 export interface Action {

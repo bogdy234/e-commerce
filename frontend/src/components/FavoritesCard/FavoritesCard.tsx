@@ -8,6 +8,8 @@ import Typography from "@mui/material/Typography";
 import Rating from "@mui/material/Rating";
 import Divider from "@mui/material/Divider";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+
 import { Button } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -21,7 +23,7 @@ interface FavoritesCardProps {
     normalPrice: number;
     reducedPrice: number;
     onClickRemove: () => void;
-    onClickAddToCart: () => void;
+    addToCart: () => void;
     inStock?: boolean;
 }
 
@@ -33,7 +35,7 @@ const FavoritesCard: FC<FavoritesCardProps> = ({
     normalPrice,
     reducedPrice,
     onClickRemove,
-    onClickAddToCart,
+    addToCart,
     inStock = true,
 }): ReactElement => {
     const matches = useMediaQuery(`(min-width:${SCREEN_BREAKPOINTS.md})`);
@@ -99,8 +101,11 @@ const FavoritesCard: FC<FavoritesCardProps> = ({
                         </Typography>
                         <Typography variant="h6">{reducedPrice}$</Typography>
                     </div>
-                    <Button variant="contained" onClick={onClickAddToCart}>
-                        Add to cart
+                    <Button variant="contained" onClick={addToCart}>
+                        <Stack direction="row" gap={1}>
+                            <ShoppingCartIcon />
+                            Add to cart
+                        </Stack>
                     </Button>
                     <Button onClick={onClickRemove}>
                         <DeleteIcon fontSize="small" />

@@ -3,13 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Grid, Skeleton, Typography } from "@mui/material";
 
 import useProducts from "@hooks/products/useProducts";
 import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
 import ProductCard from "@components/ProductCard";
 import useUser from "@hooks/user/useUser";
-import { TOAST_PROPERTIES } from "@constants/index";
+import { getMeanRatingComments } from "@helpers/helpers";
+
+const skeletonIds = [1, 2, 3, 4, 5, 6];
 
 const Home: FC = () => {
     const navigate = useNavigate();
@@ -22,6 +24,7 @@ const Home: FC = () => {
             ?.map((favorite) => favorite.product.pid)
             .includes(pid);
     };
+
     const toggleFavorite = (id: number) => {
         if (!state?.token) {
             navigate("/signin");
@@ -33,54 +36,56 @@ const Home: FC = () => {
         if (favoriteProductId) {
             mutateDelete(favoriteProductId);
             toast.success("Product was removed from your favorites.", {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
                 icon: <FavoriteIcon />,
             });
         } else {
             mutateAdd(id);
             toast.success("Product was added to your favorites.", {
-                position: toast.POSITION.TOP_RIGHT,
-                autoClose: 5000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "light",
                 icon: <FavoriteIcon sx={{ color: "red" }} />,
             });
         }
     };
 
-    console.log(favoriteProducts);
-
     return (
         <Container sx={{ mt: 12 }} maxWidth={false}>
-            {isLoading && <Typography variant="h1">Loading...</Typography>}
             {error && (
                 <Typography variant="h1" color="red">
                     Error
                 </Typography>
             )}
             <Grid container spacing={4} justifyContent="center">
+                {isLoading &&
+                    skeletonIds.map((id) => (
+                        <Grid item key={`skeleton-${id}`}>
+                            <Skeleton
+                                sx={{ width: 345, height: 300 }}
+                                animation="wave"
+                                variant="rectangular"
+                            />
+                        </Grid>
+                    ))}
                 {data?.map(
-                    ({ pid, title, price, price_with_discount, imgUrl }) => (
+                    ({
+                        pid,
+                        title,
+                        price,
+                        price_with_discount,
+                        imgUrl,
+                        quantity,
+                        comments,
+                    }) => (
                         <Grid item key={`product-${pid}`}>
                             <ProductCard
                                 title={title}
-                                rating={0}
+                                rating={getMeanRatingComments(comments)}
+                                noOfReviews={comments.length}
                                 price={price}
                                 reducedPrice={price_with_discount}
                                 imgSrc={imgUrl}
-                                toggleFavorite={() => toggleFavorite(pid)}
                                 isFavorite={isFavorite(pid)}
+                                toggleFavorite={() => toggleFavorite(pid)}
+                                addToCart={() => {}}
+                                inStock={quantity > 0}
                             />
                         </Grid>
                     )

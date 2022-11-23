@@ -30,6 +30,9 @@ class CommentsController:
 
     def check_if_comment_apartain_to_user(self, comment_id, user_id):
         return Comments.query.filter_by(user_id=user_id, id=comment_id).all()
+    
+    def check_if_user_already_added_comment(self, product_id, user_id):
+        return Comments.query.filter_by(user_id=user_id, product_id=product_id).first()
 
     def add_comment(self, **kwargs):
         dict_comments = {
@@ -45,6 +48,10 @@ class CommentsController:
         if not self.check_product_if_exist(kwargs.get("product_id")):
             dict_comments["message"] = Constants.PRODUCT_NOT_FOUND
             dict_comments["code"] = Constants.NOT_FOUND_CODE
+            return dict_comments
+        if self.check_if_user_already_added_comment(kwargs.get("product_id"), kwargs.get("user_id")):
+            dict_comments["message"] = Constants.COMMENT_ALREADY_ADDED
+            dict_comments["code"] = Constants.BAD_REQUEST
             return dict_comments
         if not self.check_if_user_exist(kwargs.get("user_id")):
             dict_comments["message"] = Constants.USER_NOT_FOUND
