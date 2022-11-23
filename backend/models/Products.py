@@ -72,3 +72,18 @@ class Product(db.Model):
             "category": self.category.value,
             "comments": [comment.serialize() for comment in self.comments],
         }
+
+    def serialize_without_comm(self):
+        return {
+            "pid": self.pid,
+            "title": self.title,
+            "price": self.price,
+            "price_with_discount": self.calculate_discount_price(
+                self.price, self.discount
+            ),
+            "quantity": self.quantity,
+            "discount": self.discount,
+            "description": self.description,
+            "imgUrl": self.imgUrl,
+            "category": self.category.value,
+        }
