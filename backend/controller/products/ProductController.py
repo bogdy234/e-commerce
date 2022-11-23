@@ -1,8 +1,7 @@
-from libs.CCommonFunctions import CCommonFunctions
 from libs.constants import Constants
 from libs.constants import Category
 from libs.LogHandler import LogHandler
-from models.Products import Product
+from repository.ProductRepository import ProductRepository
 from decimal import Decimal
 
 
@@ -29,7 +28,6 @@ class ProductController:
         list_categories = [category.value for category in Category]
         valid_arguments = self.check_arguments(**kwargs)
         if not valid_arguments or kwargs.get("discount") == None:
-            print("asdaas")
             dict_products["message"] = Constants.INVALID_ARGUMENTS
             dict_products["code"] = Constants.INTERNAL_SERVER_ERROR
             return dict_products
@@ -43,7 +41,7 @@ class ProductController:
             dict_products["message"] = Constants.INVALID_DISCOUNT
             dict_products["code"] = Constants.BAD_REQUEST
             return dict_products
-        product = Product(
+        product = ProductRepository.add_product(
             kwargs.get("title"),
             kwargs.get("price"),
             kwargs.get("quantity"),
@@ -52,7 +50,7 @@ class ProductController:
             kwargs.get("imgUrl"),
             kwargs.get("category").upper(),
         )
-        data_saved = product.save()
+        data_saved = ProductRepository.save(product)
         if data_saved:
             dict_products["message"] = Constants.SUCCES_PRODUCT
             dict_products["code"] = Constants.SUCCES_CODE
@@ -67,7 +65,7 @@ class ProductController:
             "product": None,
         }
         list_categories = [category.value for category in Category]
-        product = Product.query.get(kwargs.get("product_id"))
+        product = ProductRepository.get_product_by_id(kwargs.get("product_id"))
         if not product:
             dict_products["message"] = Constants.PRODUCT_NOT_FOUND
             dict_products["code"] = Constants.NOT_FOUND_CODE
@@ -100,7 +98,7 @@ class ProductController:
                 dict_products["code"] = Constants.BAD_REQUEST
                 return dict_products
             product.category = kwargs.get("category").upper()
-        data_saved = product.save()
+        data_saved = ProductRepository.save(product)
         if data_saved:
             dict_products["message"] = Constants.PRODUCT_UPDATED
             dict_products["code"] = Constants.SUCCES_CODE
@@ -113,12 +111,12 @@ class ProductController:
             "message": Constants.DEFAULT_PRODUCT_MESSAGE,
             "code": Constants.INTERNAL_SERVER_ERROR,
         }
-        product = Product.query.get(product_id)
+        product = ProductRepository.get_product_by_id(product_id)
         if not product:
             dict_delete["message"] = Constants.PRODUCT_NOT_FOUND
             dict_delete["code"] = Constants.NOT_FOUND_CODE
             return dict_delete
-        data_deleted = product.delete()
+        data_deleted = ProductRepository.delete(product)
         if data_deleted:
             dict_delete["message"] = Constants.PRODUCT_DELETED
             dict_delete["code"] = Constants.SUCCES_CODE
@@ -126,14 +124,14 @@ class ProductController:
         return dict_delete
 
     def get_all_products(self):
-        return [product.serialize() for product in Product.query.all()]
+        return [product.serialize() for product in ProductRepository.get_all()]
 
     def get_product_by_id(self, product_id):
         dict_product = {
             "message": Constants.DEFAULT_PRODUCT_MESSAGE,
             "code": Constants.INTERNAL_SERVER_ERROR,
         }
-        product = Product.query.get(product_id)
+        product = ProductRepository.get_product_by_id(product_id)
         if not product:
             dict_product["message"] = Constants.PRODUCT_NOT_FOUND
             dict_product["code"] = Constants.NOT_FOUND_CODE

@@ -8,7 +8,7 @@ from controller.products.FavouritesController import FavouritesController
 @check_auth()
 def favourite_prod(user):
     if request.method == "GET":
-        return jsonify(FavouritesController().get_favourites_products(user))
+        return jsonify(FavouritesController().get_favourites_products(user_id=user.cid))
     if request.method == "POST":
         product_id = request.json.get("product_id")
         data_fav = FavouritesController().add_favourite_product(

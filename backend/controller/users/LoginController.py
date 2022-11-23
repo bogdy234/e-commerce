@@ -1,18 +1,14 @@
 import bcrypt
 
-from libs.CCommonFunctions import CCommonFunctions
 from libs.constants import Constants
 from libs.JwtHandler import JwtHandler
 from libs.LogHandler import LogHandler
-from models.User import User
+from repository.UserRepository import UserRepository
 
 
 class LoginController:
     def __init__(self) -> None:
         self.log_msg = LogHandler("register_controller.log")
-
-    def get_user_by_email(self, email):
-        return User.query.filter_by(email=email).first()
 
     def login(self, email, password, expiration=None):
         dict_login = {
@@ -21,7 +17,7 @@ class LoginController:
             "user": None,
             "token": None,
         }
-        user = self.get_user_by_email(email)
+        user = UserRepository.get_user_by_email(email)
         if not user:
             dict_login["message"] = Constants.USER_NOT_FOUND
             dict_login["code"] = Constants.BAD_REQUEST
