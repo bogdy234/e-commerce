@@ -2,16 +2,19 @@ from application import db
 from models.Products import Product
 
 
-class Favourites(db.Model):
-    __tablename__ = "favourites_prods"
+class Cart(db.Model):
+    __tablename__ = "cart"
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.cid"), nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey("products.pid"), nullable=False)
-    products = db.relationship(Product, backref="favourites_prods")
+    ordered = db.Column(db.Boolean, default=False, nullable=False)
+    product_quantity = db.Column(db.Integer, nullable=False, default=1)
+    products = db.relationship(Product, backref="cart")
 
-    def __init__(self, user_id, product_id) -> None:
+    def __init__(self, user_id, product_id, product_quantity) -> None:
         self.user_id = user_id
         self.product_id = product_id
+        self.product_quantity = product_quantity
 
     def __str__(self) -> str:
         return (
@@ -35,4 +38,8 @@ class Favourites(db.Model):
             return False
 
     def serialize(self):
-        return {"id": self.id, "product": self.products.serialize()}
+        return {
+            "id": self.id,
+            "product": self.products.serialize_without_comm(),
+            "product_quantity": self.product_quantity,
+        }

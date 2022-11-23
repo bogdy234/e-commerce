@@ -67,6 +67,13 @@ class Constants:
     COMMENT_DELETED = "Comment was deleted!"
     COMMENT_ALREADY_ADDED = "You already added a comment!"
     INVALID_QUANTITY = "Quantity must by higher than 0"
+    DEFAULT_CART_MESSAGE = "Error on adding product to cart! Please try again later!"
+    UPDATE_PRODUCT_QUANTITY_CART = "Quantity of the product was updated in the cart!"
+    PRODUCT_NOT_IN_STOCK = "You can't order this product. It's not in stock anymore!"
+    TO_MUCH_PRODUCTS = "We don't have this amount of products in stock! Please try again with a lower amount!"
+    PRODUCT_ADDED_TO_CARD = "Product was added in the cart!"
+    CART_ID_NOT_FOUND = "This product not found in your cart"
+    PRODUCT_DELETED_FROM_CART = "Product was deleted from your cart!"
 
 
 class Category(enum.Enum):

@@ -29,6 +29,8 @@ from models.User import User
 from models.Role import Role
 from models.Products import Product
 from models.Comments import Comments
+from models.Address import Address
+from models.Cart import Cart
 
 # Views
 from view.users.login_view import login
@@ -44,3 +46,4 @@ from view.products.comments import (
     comments_handle,
     get_user_comments,
 )
+from view.users.cart import cart

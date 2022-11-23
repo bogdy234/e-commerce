@@ -21,12 +21,15 @@ def check_auth(admin=False):
                 auth_token = auth_token.split("Bearer")[1].strip()
                 if JwtHandler.get_blacklist_token(auth_token):
                     return (
-                        {
-                            "message": Constants.BLACKLIST_TOKEN,
-                            "code": Constants.UNAUTHORIZED,
-                            "is_token_problem": True,
-                        }
-                    ), Constants.UNAUTHORIZED
+                        jsonify(
+                            {
+                                "message": Constants.BLACKLIST_TOKEN,
+                                "code": Constants.UNAUTHORIZED,
+                                "is_token_problem": True,
+                            }
+                        ),
+                        Constants.UNAUTHORIZED,
+                    )
                 token_valability, token_status = JwtHandler.check_valability(auth_token)
                 if not token_status:
                     return (
