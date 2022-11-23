@@ -51,6 +51,10 @@ class CartController:
             "code": Constants.NO_CONTENT,
             "cart": None,
         }
+        if not quantity:
+            dict_cart["message"] = Constants.INVALID_QUANTITY
+            dict_cart["code"] = Constants.BAD_REQUEST
+            return dict_cart
         product_exist = self.check_if_product_exist(product_id)
         if not product_exist:
             dict_cart["message"] = Constants.PRODUCT_NOT_FOUND
