@@ -46,5 +46,5 @@ class Comments(db.Model):
             "product_id": self.product_id,
             "title": self.title,
             "description": self.description,
-            "rating": self.rating,
+            "rating": int(self.rating),
         }
