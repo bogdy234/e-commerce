@@ -1,8 +1,6 @@
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Container, Grid, Skeleton, Typography } from "@mui/material";
 
 import useProducts from "@hooks/products/useProducts";
@@ -38,14 +36,8 @@ const Home: FC = () => {
         )[0]?.id;
         if (favoriteProductId) {
             mutateDelete(favoriteProductId);
-            toast.success("Product was removed from your favorites.", {
-                icon: <FavoriteIcon />,
-            });
         } else {
             mutateAdd(id);
-            toast.success("Product was added to your favorites.", {
-                icon: <FavoriteIcon sx={{ color: "red" }} />,
-            });
         }
     };
 
