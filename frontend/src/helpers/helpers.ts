@@ -13,7 +13,7 @@ export const isValidPassword = (password: string) => {
 export const getMeanRatingComments = (comments: Comment[]): number => {
     const initialValue = 0;
 
-    if (!comments.length) {
+    if (!comments?.length) {
         return initialValue;
     }
 

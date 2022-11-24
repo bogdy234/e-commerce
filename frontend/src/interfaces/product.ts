@@ -15,3 +15,9 @@ export interface FavoriteProduct {
     id: number;
     product: Product;
 }
+
+export interface CartProduct {
+    id: number;
+    product: Product;
+    product_quantity: number;
+}

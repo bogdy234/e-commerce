@@ -1,41 +1,22 @@
 import { FC, ReactElement } from "react";
 
-import Container from "@mui/material/Container";
+import {
+    Box,
+    Skeleton,
+    Container,
+    Typography,
+    Stack,
+    Divider,
+} from "@mui/material";
 
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Divider from "@mui/material/Divider";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { Product } from "@interfaces/product";
 import { SCREEN_BREAKPOINTS } from "@constants";
 import FavoritesCard from "@components/FavoritesCard";
 import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
+import useCart from "@hooks/products/useCart";
 import { getMeanRatingComments } from "@helpers/helpers";
-import { Skeleton } from "@mui/material";
-
-// const products = [
-//     {
-//         id: 1,
-//         title: "Product 1",
-//         rating: 4.5,
-//         noOfReviews: 100,
-//         imgUrl: "https://picsum.photos/200",
-//         normalPrice: 100,
-//         inStock: true,
-//         reducedPrice: 50,
-//     },
-//     {
-//         id: 2,
-//         title: "Product 2",
-//         rating: 4.5,
-//         noOfReviews: 100,
-//         imgUrl: "https://picsum.photos/200",
-//         normalPrice: 100,
-//         reducedPrice: 50,
-//     },
-// ];
 
 const skeletonIds = [1, 2];
 
@@ -45,12 +26,17 @@ const Favorites: FC = (): ReactElement => {
         favoriteProducts,
         favoriteProductsNumber,
         mutateDelete,
-        isLoadingDelete,
     } = useFavoriteProducts();
+    const { isLoadingAdd, mutateAdd } = useCart();
     const matches = useMediaQuery(`(min-width:${SCREEN_BREAKPOINTS.md})`);
 
     const onClickRemove = (id: number) => {
         mutateDelete(id);
+    };
+
+    const addToCart = (pid: number) => {
+        console.log(pid);
+        mutateAdd({ productId: pid, quantity: 1 });
     };
 
     return (
@@ -86,9 +72,7 @@ const Favorites: FC = (): ReactElement => {
                             inStock={product.quantity > 0}
                             reducedPrice={product.price_with_discount}
                             onClickRemove={() => onClickRemove(id)}
-                            addToCart={() =>
-                                console.log(`${product.title} added to cart`)
-                            }
+                            addToCart={() => addToCart(product.pid)}
                             key={`favorite-product-${product.pid}`}
                         />
                     )

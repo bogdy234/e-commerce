@@ -1,24 +1,21 @@
 import { FC, ReactElement } from "react";
 
-import {
-    Button,
-    Container,
-    Stack,
-    Typography,
-    Rating,
-    Divider,
-} from "@mui/material";
+import { SCREEN_BREAKPOINTS } from "@constants/index";
 
+import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import Rating from "@mui/material/Rating";
+import Divider from "@mui/material/Divider";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
+import { Button } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import theme from "@theme";
-import { SCREEN_BREAKPOINTS } from "@constants/index";
 import Price from "@components/Price";
 
-interface FavoritesCardProps {
+interface CartCardProps {
     title: string;
     rating: number;
     noOfReviews: number;
@@ -30,7 +27,7 @@ interface FavoritesCardProps {
     inStock?: boolean;
 }
 
-const FavoritesCard: FC<FavoritesCardProps> = ({
+const CartCard: FC<CartCardProps> = ({
     title,
     rating,
     noOfReviews,
@@ -95,14 +92,15 @@ const FavoritesCard: FC<FavoritesCardProps> = ({
                             Not in stock
                         </Typography>
                     )}
+
                     <Price
                         normalPrice={normalPrice}
                         reducedPrice={reducedPrice}
                     />
+
                     <Button variant="contained" onClick={addToCart}>
                         <Stack direction="row" gap={1}>
-                            <ShoppingCartIcon />
-                            Add to cart
+                            Move to favorites
                         </Stack>
                     </Button>
                     <Button onClick={onClickRemove}>
@@ -116,4 +114,4 @@ const FavoritesCard: FC<FavoritesCardProps> = ({
     );
 };
 
-export default FavoritesCard;
+export default CartCard;

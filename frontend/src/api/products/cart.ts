@@ -1,27 +1,21 @@
 import { SERVER_URL } from "@constants/index";
 import axios from "axios";
 
-export const getFavoriteProducts = async (token: string) => {
-    const { data: response } = await axios.get(
-        `${SERVER_URL}/api/products/favourites`,
-        {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        }
-    );
+export const getCartProducts = async (token: string) => {
+    const { data: response } = await axios.get(`${SERVER_URL}/api/users/cart`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
     return response;
 };
 
-export const deleteFavoriteProduct = async (
-    token: string,
-    productId: number
-) => {
+export const deleteCartProduct = async (token: string, cart_id: number) => {
     const data = {
-        favourite_id: productId,
+        cart_id: cart_id,
     };
     const { data: response } = await axios.delete(
-        `${SERVER_URL}/api/products/favourites`,
+        `${SERVER_URL}/api/users/cart`,
         {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -32,13 +26,20 @@ export const deleteFavoriteProduct = async (
     return response;
 };
 
-export const addFavoriteProduct = async (token: string, productId: number) => {
+export const addCartProduct = async (
+    token: string,
+    productId: number,
+    quantity: number
+) => {
     const data = {
         product_id: productId,
+        quantity,
     };
 
+    console.log("productId", productId, quantity);
+
     const { data: response } = await axios.post(
-        `${SERVER_URL}/api/products/favourites`,
+        `${SERVER_URL}/api/users/cart`,
         data,
         {
             headers: {

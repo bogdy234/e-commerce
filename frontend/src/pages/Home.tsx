@@ -47,7 +47,7 @@ const Home: FC = () => {
     };
 
     return (
-        <Container sx={{ mt: 12 }} maxWidth={false}>
+        <Container sx={{ mt: 12, pb: 12 }} maxWidth={false}>
             {error && (
                 <Typography variant="h1" color="red">
                     Error

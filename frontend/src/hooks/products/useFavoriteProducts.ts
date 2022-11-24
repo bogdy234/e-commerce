@@ -12,7 +12,7 @@ import {
     useQuery,
     useQueryClient,
 } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 interface UseFavoriteProductData {
     isLoading: boolean;
@@ -28,8 +28,6 @@ interface UseFavoriteProductData {
 
 const useFavoriteProducts = (): UseFavoriteProductData => {
     const queryClient = useQueryClient();
-    const [favoriteProductsNumber, setFavoriteProductsNumber] =
-        useState<number>(0);
     const { state, dispatch } = useUser();
 
     const {
@@ -44,10 +42,6 @@ const useFavoriteProducts = (): UseFavoriteProductData => {
         retry: false,
         refetchOnWindowFocus: false,
     });
-
-    useEffect(() => {
-        setFavoriteProductsNumber(favoriteProducts?.length);
-    }, [favoriteProducts]);
 
     useEffect(() => {
         // TODO: add type to error
@@ -89,7 +83,7 @@ const useFavoriteProducts = (): UseFavoriteProductData => {
         error,
         favoriteProducts,
         isFetching,
-        favoriteProductsNumber,
+        favoriteProductsNumber: favoriteProducts?.length || 0,
         isLoadingDelete,
         mutateDelete,
     };
