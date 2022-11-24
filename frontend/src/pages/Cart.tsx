@@ -12,6 +12,7 @@ import CartCard from "@components/CartCard";
 import useCart from "@hooks/products/useCart";
 import { getMeanRatingComments } from "@helpers/helpers";
 import { Skeleton } from "@mui/material";
+import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
 
 const skeletonIds = [1, 2];
 
@@ -20,13 +21,19 @@ const Cart: FC = () => {
         isLoading,
         cartProducts,
         cartProductsNumber,
-        mutateDelete,
-        isLoadingDelete,
+        mutateDelete: mutateDeleteCart,
     } = useCart();
+    const { mutateAdd } = useFavoriteProducts();
+
     const matches = useMediaQuery(`(min-width:${SCREEN_BREAKPOINTS.md})`);
 
     const onClickRemove = (id: number) => {
-        mutateDelete(id);
+        mutateDeleteCart(id);
+    };
+
+    const moveToFavorites = (pid: number, cartId: number) => {
+        mutateAdd(pid);
+        mutateDeleteCart(cartId);
     };
 
     return (
@@ -62,8 +69,8 @@ const Cart: FC = () => {
                             inStock={product.quantity > 0}
                             reducedPrice={product.price_with_discount}
                             onClickRemove={() => onClickRemove(id)}
-                            addToCart={() =>
-                                console.log(`${product.title} added to cart`)
+                            moveToFavorites={() =>
+                                moveToFavorites(product.pid, id)
                             }
                             key={`favorite-product-${product.pid}`}
                         />

@@ -23,7 +23,7 @@ interface CartCardProps {
     normalPrice: number;
     reducedPrice: number;
     onClickRemove: () => void;
-    addToCart: () => void;
+    moveToFavorites: () => void;
     inStock?: boolean;
 }
 
@@ -35,7 +35,7 @@ const CartCard: FC<CartCardProps> = ({
     normalPrice,
     reducedPrice,
     onClickRemove,
-    addToCart,
+    moveToFavorites,
     inStock = true,
 }): ReactElement => {
     const matches = useMediaQuery(`(min-width:${SCREEN_BREAKPOINTS.md})`);
@@ -98,7 +98,7 @@ const CartCard: FC<CartCardProps> = ({
                         reducedPrice={reducedPrice}
                     />
 
-                    <Button variant="contained" onClick={addToCart}>
+                    <Button variant="contained" onClick={moveToFavorites}>
                         <Stack direction="row" gap={1}>
                             Move to favorites
                         </Stack>

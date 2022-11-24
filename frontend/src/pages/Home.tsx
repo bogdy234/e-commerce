@@ -9,6 +9,8 @@ import useProducts from "@hooks/products/useProducts";
 import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
 import ProductCard from "@components/ProductCard";
 import useUser from "@hooks/user/useUser";
+import useCart from "@hooks/products/useCart";
+
 import { getMeanRatingComments } from "@helpers/helpers";
 
 const skeletonIds = [1, 2, 3, 4, 5, 6];
@@ -18,6 +20,7 @@ const Home: FC = () => {
     const { state } = useUser();
     const { isLoading, error, data } = useProducts();
     const { mutateAdd, favoriteProducts, mutateDelete } = useFavoriteProducts();
+    const { mutateAdd: mutateAddCart } = useCart();
 
     const isFavorite = (pid: number) => {
         return favoriteProducts
@@ -44,6 +47,10 @@ const Home: FC = () => {
                 icon: <FavoriteIcon sx={{ color: "red" }} />,
             });
         }
+    };
+
+    const addToCart = (pid: number) => {
+        mutateAddCart({ productId: pid, quantity: 1 });
     };
 
     return (
@@ -84,7 +91,7 @@ const Home: FC = () => {
                                 imgSrc={imgUrl}
                                 isFavorite={isFavorite(pid)}
                                 toggleFavorite={() => toggleFavorite(pid)}
-                                addToCart={() => {}}
+                                addToCart={() => addToCart(pid)}
                                 inStock={quantity > 0}
                             />
                         </Grid>

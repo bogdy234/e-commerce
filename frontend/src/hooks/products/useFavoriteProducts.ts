@@ -13,6 +13,7 @@ import {
     useQueryClient,
 } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 interface UseFavoriteProductData {
     isLoading: boolean;
@@ -58,9 +59,10 @@ const useFavoriteProducts = (): UseFavoriteProductData => {
             deleteFavoriteProduct(state?.token as string, productId),
         onSuccess: () => {
             queryClient.invalidateQueries(["favoriteProducts"]);
+            toast.success("Product was removed from your favorites.");
         },
         onError: (data: any) => {
-            // TODO: make a handler
+            toast.error(data?.response?.data?.message);
         },
     });
 
@@ -70,9 +72,10 @@ const useFavoriteProducts = (): UseFavoriteProductData => {
             addFavoriteProduct(state?.token as string, productId),
         onSuccess: () => {
             queryClient.invalidateQueries(["favoriteProducts"]);
+            toast.success("Product was added to your favorites.");
         },
         onError: (data: any) => {
-            // TODO: make a handler
+            toast.error(data?.response?.data?.message);
         },
     });
 

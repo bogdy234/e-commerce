@@ -60,10 +60,8 @@ const useFavoriteProducts = (): UseCartData => {
             queryClient.invalidateQueries(["cartProducts"]);
             toast.success("Product was removed from your cart.");
         },
-        onError: () => {
-            toast.error(
-                "Could not remove product from your cart. Please try again later."
-            );
+        onError: (data: any) => {
+            toast.error(data?.response?.data?.message);
         },
     });
 
