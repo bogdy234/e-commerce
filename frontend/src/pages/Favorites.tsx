@@ -16,9 +16,9 @@ import { SCREEN_BREAKPOINTS } from "@constants";
 import FavoritesCard from "@components/FavoritesCard";
 import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
 import useCart from "@hooks/products/useCart";
-import { getMeanRatingComments } from "@helpers/helpers";
+import { generateIds, getMeanRatingComments } from "@helpers/helpers";
 
-const skeletonIds = [1, 2];
+const skeletonIds = generateIds(2);
 
 const Favorites: FC = (): ReactElement => {
     const {

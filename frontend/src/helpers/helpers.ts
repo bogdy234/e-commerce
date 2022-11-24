@@ -30,4 +30,12 @@ export const getMeanRatingComments = (comments: Comment[]): number => {
     );
 };
 
+export const generateIds = (range: number) => {
+    const array = [];
+    for (let i = 0; i < range; i++) {
+        array.push(i);
+    }
+    return array;
+};
+
 export default {};

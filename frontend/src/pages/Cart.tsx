@@ -10,11 +10,11 @@ import { Product } from "@interfaces/product";
 import { SCREEN_BREAKPOINTS } from "@constants";
 import CartCard from "@components/CartCard";
 import useCart from "@hooks/products/useCart";
-import { getMeanRatingComments } from "@helpers/helpers";
+import { generateIds, getMeanRatingComments } from "@helpers/helpers";
 import { Skeleton } from "@mui/material";
 import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
 
-const skeletonIds = [1, 2];
+const skeletonIds = generateIds(2);
 
 const Cart: FC = () => {
     const {

@@ -11,9 +11,9 @@ import ProductCard from "@components/ProductCard";
 import useUser from "@hooks/user/useUser";
 import useCart from "@hooks/products/useCart";
 
-import { getMeanRatingComments } from "@helpers/helpers";
+import { generateIds, getMeanRatingComments } from "@helpers/helpers";
 
-const skeletonIds = [1, 2, 3, 4, 5, 6];
+const skeletonIds = generateIds(10);
 
 const Home: FC = () => {
     const navigate = useNavigate();
