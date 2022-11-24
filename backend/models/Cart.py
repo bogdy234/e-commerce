@@ -40,6 +40,6 @@ class Cart(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "product": self.products.serialize_without_comm(),
+            "product": self.products.serialize(),
             "product_quantity": self.product_quantity,
         }
