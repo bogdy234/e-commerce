@@ -36,9 +36,29 @@ export const addCartProduct = async (
         quantity,
     };
 
-    console.log("productId", productId, quantity);
-
     const { data: response } = await axios.post(
+        `${SERVER_URL}/api/users/cart`,
+        data,
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+    );
+    return response;
+};
+
+export const editCartProduct = async (
+    token: string,
+    cartId: number,
+    productQuantity: number
+) => {
+    const data = {
+        cart_id: cartId,
+        new_quantity: productQuantity,
+    };
+
+    const { data: response } = await axios.put(
         `${SERVER_URL}/api/users/cart`,
         data,
         {

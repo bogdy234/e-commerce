@@ -42,13 +42,13 @@ class ProductController:
             dict_products["code"] = Constants.BAD_REQUEST
             return dict_products
         product = ProductRepository.add_product(
-            kwargs.get("title"),
-            kwargs.get("price"),
-            kwargs.get("quantity"),
-            kwargs.get("discount"),
-            kwargs.get("description"),
-            kwargs.get("imgUrl"),
-            kwargs.get("category").upper(),
+            title = kwargs.get("title"),
+            price = kwargs.get("price"),
+            quantity = kwargs.get("quantity"),
+            discount = kwargs.get("discount"),
+            description = kwargs.get("description"),
+            imgUrl = kwargs.get("imgUrl"),
+            category = kwargs.get("category").upper(),
         )
         data_saved = ProductRepository.save(product)
         if data_saved:

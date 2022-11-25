@@ -61,21 +61,27 @@ const Favorites: FC = (): ReactElement => {
                             key={`skeleton-${id}`}
                         />
                     ))}
-                {favoriteProducts?.map(
-                    ({ product, id }: { product: Product; id: number }) => (
-                        <FavoritesCard
-                            title={product.title}
-                            rating={getMeanRatingComments(product.comments)}
-                            noOfReviews={product.comments.length}
-                            imgUrl={product.imgUrl}
-                            normalPrice={product.price}
-                            inStock={product.quantity > 0}
-                            reducedPrice={product.price_with_discount}
-                            onClickRemove={() => onClickRemove(id)}
-                            addToCart={() => addToCart(product.pid)}
-                            key={`favorite-product-${product.pid}`}
-                        />
+                {favoriteProducts?.length ? (
+                    favoriteProducts.map(
+                        ({ product, id }: { product: Product; id: number }) => (
+                            <FavoritesCard
+                                title={product.title}
+                                rating={getMeanRatingComments(product.comments)}
+                                noOfReviews={product.comments.length}
+                                imgUrl={product.imgUrl}
+                                normalPrice={product.price}
+                                inStock={product.quantity > 0}
+                                reducedPrice={product.price_with_discount}
+                                onClickRemove={() => onClickRemove(id)}
+                                addToCart={() => addToCart(product.pid)}
+                                key={`favorite-product-${product.pid}`}
+                            />
+                        )
                     )
+                ) : (
+                    <Typography variant="h6" align="center" sx={{ my: 6 }}>
+                        There are no products in favorites.{" "}
+                    </Typography>
                 )}
             </Box>
         </Container>

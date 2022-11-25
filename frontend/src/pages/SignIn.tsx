@@ -48,6 +48,14 @@ const SignIn: FC = () => {
             password: data.get("password"),
             remember: data.get("remember") || "",
         };
+        const { email, password, remember } = userData;
+        if (
+            typeof email !== "string" ||
+            typeof password !== "string" ||
+            typeof remember !== "string"
+        ) {
+            throw new Error("Type unsupported!");
+        }
 
         clearErrors();
 

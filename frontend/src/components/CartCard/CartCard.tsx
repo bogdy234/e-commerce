@@ -1,21 +1,31 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, useState } from "react";
 
 import { SCREEN_BREAKPOINTS } from "@constants/index";
 
-import Container from "@mui/material/Container";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import Rating from "@mui/material/Rating";
-import Divider from "@mui/material/Divider";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-import { Button } from "@mui/material";
+import {
+    Button,
+    Typography,
+    Divider,
+    Rating,
+    Stack,
+    Select,
+    MenuItem,
+    FormControl,
+    InputLabel,
+    Container,
+} from "@mui/material";
+
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 import theme from "@theme";
 import Price from "@components/Price";
+import useCart from "@hooks/products/useCart";
+import { generateIds } from "@helpers/helpers";
 
 interface CartCardProps {
+    id: number;
     title: string;
     rating: number;
     noOfReviews: number;
@@ -25,9 +35,12 @@ interface CartCardProps {
     onClickRemove: () => void;
     moveToFavorites: () => void;
     inStock?: boolean;
+    quantity: number;
+    productQuantity: number;
 }
 
 const CartCard: FC<CartCardProps> = ({
+    id,
     title,
     rating,
     noOfReviews,
@@ -37,8 +50,11 @@ const CartCard: FC<CartCardProps> = ({
     onClickRemove,
     moveToFavorites,
     inStock = true,
+    quantity,
+    productQuantity,
 }): ReactElement => {
     const matches = useMediaQuery(`(min-width:${SCREEN_BREAKPOINTS.md})`);
+    const { mutateEdit } = useCart();
 
     return (
         <Container maxWidth="lg" sx={{ mt: 4 }}>
@@ -94,10 +110,39 @@ const CartCard: FC<CartCardProps> = ({
                     )}
 
                     <Price
-                        normalPrice={normalPrice}
-                        reducedPrice={reducedPrice}
+                        normalPrice={quantity * normalPrice}
+                        reducedPrice={quantity * reducedPrice}
                     />
-
+                    <FormControl fullWidth size="small">
+                        <InputLabel id="demo-simple-select-label">
+                            Quantity
+                        </InputLabel>
+                        <Select
+                            labelId="quantity-product"
+                            id="quantity"
+                            value={quantity}
+                            label="Quantity"
+                            onChange={(e) =>
+                                mutateEdit({
+                                    cartId: id,
+                                    productQuantity: e.target.value as number,
+                                })
+                            }
+                            MenuProps={{
+                                PaperProps: {
+                                    sx: {
+                                        maxHeight: 500,
+                                    },
+                                },
+                            }}
+                        >
+                            {generateIds(productQuantity, 1, false).map((v) => (
+                                <MenuItem value={v} key={v}>
+                                    {v}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                     <Button variant="contained" onClick={moveToFavorites}>
                         <Stack direction="row" gap={1}>
                             Move to favorites

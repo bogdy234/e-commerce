@@ -15,6 +15,7 @@ import Cart from "@pages/Cart";
 import RequireAuth from "@components/RequireAuth";
 import Unauthorized from "@pages/Unauthorized";
 import PersistLogin from "@components/PersistLogin";
+import Checkout from "@pages/Checkout";
 
 const router = createBrowserRouter([
     {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
                             {
                                 path: "cart",
                                 element: <Cart />,
+                            },
+                            {
+                                path: "checkout",
+                                element: <Checkout />,
                             },
                         ],
                     },

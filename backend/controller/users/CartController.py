@@ -96,7 +96,7 @@ class CartController:
             dict_update_quantity["message"] = Constants.CART_ID_NOT_FOUND
             dict_update_quantity["code"] = Constants.NOT_FOUND_CODE
             return dict_update_quantity
-        if quantity <= 1:
+        if quantity < 1:
             dict_update_quantity["message"] = Constants.INVALID_QUANTITY
             dict_update_quantity["code"] = Constants.BAD_REQUEST
             return dict_update_quantity

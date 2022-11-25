@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { toast } from "react-toastify";
-
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import { useNavigate } from "react-router-dom";
 
 import {
     addFavoriteProduct,
@@ -17,6 +16,7 @@ import {
     useQuery,
     useQueryClient,
 } from "@tanstack/react-query";
+import { Button } from "@mui/material";
 
 interface UseFavoriteProductData {
     isLoading: boolean;
@@ -32,6 +32,7 @@ interface UseFavoriteProductData {
 
 const useFavoriteProducts = (): UseFavoriteProductData => {
     const queryClient = useQueryClient();
+    const navigate = useNavigate();
     const { state, dispatch } = useUser();
 
     const {
@@ -71,13 +72,19 @@ const useFavoriteProducts = (): UseFavoriteProductData => {
         },
     });
 
+    const favoriteToast = () => (
+        <Button onClick={() => navigate("/favorites")}>
+            Product was added to your favorites.
+        </Button>
+    );
+
     const { mutate: mutateAdd, isLoading: isLoadingAdd } = useMutation({
         mutationKey: ["addFavoriteProduct"],
         mutationFn: (productId: number) =>
             addFavoriteProduct(state?.token as string, productId),
         onSuccess: () => {
             queryClient.invalidateQueries(["favoriteProducts"]);
-            toast.success("Product was added to your favorites.", {
+            toast.success(favoriteToast, {
                 icon: "❤️",
             });
         },

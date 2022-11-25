@@ -30,10 +30,17 @@ export const getMeanRatingComments = (comments: Comment[]): number => {
     );
 };
 
-export const generateIds = (range: number) => {
+export const generateIds = (
+    range: number,
+    starting = 0,
+    strictLower = true
+) => {
     const array = [];
-    for (let i = 0; i < range; i++) {
+    for (let i = starting; i < range; i++) {
         array.push(i);
+    }
+    if (!strictLower) {
+        array.push(range);
     }
     return array;
 };
