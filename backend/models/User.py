@@ -17,6 +17,7 @@ class User(db.Model):
     password = db.Column(db.String(512), nullable=False)
     registered_date = db.Column(db.DateTime, default=datetime.now())
     vat = db.Column(db.Numeric, default=19)
+    updated_at = db.Column(db.DateTime, default=datetime.now())
 
     def __init__(self, first_name, last_name, email, role_id, password, vat) -> None:
         self.first_name = first_name

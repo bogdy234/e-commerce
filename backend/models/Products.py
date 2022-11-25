@@ -2,6 +2,7 @@ from application import db
 from libs.constants import Category
 from models.Comments import Comments
 from decimal import Decimal
+from datetime import datetime
 
 
 class Product(db.Model):
@@ -15,6 +16,8 @@ class Product(db.Model):
     imgUrl = db.Column(db.String(256), nullable=False)
     comments = db.relationship(Comments, backref="request", cascade="all, delete")
     category = db.Column(db.Enum(Category, nullable=False))
+    created_at = db.Column(db.DateTime, default=datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.now())
 
     def __init__(
         self, title, price, quantity, discount, description, imgUrl, category

@@ -1,5 +1,6 @@
 from application import db
 from models.User import User
+from datetime import datetime
 
 
 class Comments(db.Model):
@@ -12,6 +13,8 @@ class Comments(db.Model):
     title = db.Column(db.String(256), nullable=False)
     description = db.Column(db.String(4096), nullable=False)
     rating = db.Column(db.Numeric())
+    created_at = db.Column(db.DateTime, default=datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.now())
 
     def __init__(self, user_id, product_id, title, description, rating) -> None:
         self.user_id = user_id

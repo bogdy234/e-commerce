@@ -1,5 +1,6 @@
 from application import db
 from models.Products import Product
+from datetime import datetime
 
 
 class Cart(db.Model):
@@ -10,6 +11,7 @@ class Cart(db.Model):
     ordered = db.Column(db.Boolean, default=False, nullable=False)
     product_quantity = db.Column(db.Integer, nullable=False, default=1)
     products = db.relationship(Product, backref="cart")
+    created_at = db.Column(db.DateTime, default=datetime.now())
 
     def __init__(self, user_id, product_id, product_quantity) -> None:
         self.user_id = user_id

@@ -1,5 +1,6 @@
 from application import db
 from models.Products import Product
+from datetime import datetime
 
 
 class Favourites(db.Model):
@@ -8,6 +9,8 @@ class Favourites(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.cid"), nullable=False)
     product_id = db.Column(db.Integer, db.ForeignKey("products.pid"), nullable=False)
     products = db.relationship(Product, backref="favourites_prods")
+    created_at = db.Column(db.DateTime, default=datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.now())
 
     def __init__(self, user_id, product_id) -> None:
         self.user_id = user_id

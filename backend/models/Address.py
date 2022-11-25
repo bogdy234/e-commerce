@@ -1,5 +1,6 @@
 from application import db
 from libs.constants import Title
+from datetime import datetime
 
 
 class Address(db.Model):
@@ -14,6 +15,8 @@ class Address(db.Model):
     country = db.Column(db.String(128))
     postalcode = db.Column(db.String(16))
     user_id = db.Column(db.Integer, db.ForeignKey("users.cid"), unique=True)
+    created_at = db.Column(db.DateTime, default=datetime.now())
+    updated_at = db.Column(db.DateTime, default=datetime.now())
 
     def __init__(
         self,

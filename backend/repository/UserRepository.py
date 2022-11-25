@@ -61,7 +61,9 @@ class UserRepository:
 
     @staticmethod
     def get_user_cart_items(user_id):
-        return Cart.query.filter_by(user_id=user_id, ordered=False)
+        return Cart.query.filter_by(user_id=user_id, ordered=False).order_by(
+            Cart.created_at
+        )
 
     @staticmethod
     def check_user_favourite(favourite_id, user_id):
