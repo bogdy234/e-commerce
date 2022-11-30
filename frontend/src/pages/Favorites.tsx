@@ -27,7 +27,7 @@ const Favorites: FC = (): ReactElement => {
         favoriteProductsNumber,
         mutateDelete,
     } = useFavoriteProducts();
-    const { isLoadingAdd, mutateAdd } = useCart();
+    const { mutateAdd } = useCart();
     const matches = useMediaQuery(`(min-width:${SCREEN_BREAKPOINTS.md})`);
 
     const onClickRemove = (id: number) => {

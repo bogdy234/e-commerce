@@ -1,3 +1,7 @@
+import { useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import {
     addCartProduct,
     deleteCartProduct,
@@ -14,9 +18,6 @@ import {
     useQuery,
     useQueryClient,
 } from "@tanstack/react-query";
-import { useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 interface MutateAddParams {
     productId: number;
@@ -43,12 +44,27 @@ interface UseCartData {
     totalAmountDiscount: number;
 }
 
+interface ErrorType {
+    response: {
+        data: {
+            is_token_problem: boolean;
+            message: string;
+        };
+    };
+}
+
+export interface QueryCartData {
+    cart: CartProduct[];
+    total_amount: number;
+    total_amount_with_discount: number;
+}
+
 const useFavoriteProducts = (): UseCartData => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
     const { state, dispatch } = useUser();
 
-    const { isLoading, error, data } = useQuery({
+    const { isLoading, error, data } = useQuery<QueryCartData, ErrorType>({
         queryKey: ["cartProducts"],
         queryFn: () => getCartProducts(state?.token || ""),
         enabled: !!state?.token,
@@ -57,7 +73,6 @@ const useFavoriteProducts = (): UseCartData => {
     });
 
     useEffect(() => {
-        // TODO: add type to error
         if (error?.response?.data?.is_token_problem) {
             dispatch({
                 type: RESET_USER,
@@ -73,12 +88,12 @@ const useFavoriteProducts = (): UseCartData => {
             queryClient.invalidateQueries(["cartProducts"]);
             toast.success("Product was removed from your cart.");
         },
-        onError: (data: any) => {
-            toast.error(data?.response?.data?.message);
+        onError: (error: ErrorType) => {
+            toast.error(error?.response?.data?.message);
         },
     });
 
-    const addCartToast = useMemo(
+    const addCartToast = useCallback(
         () => (
             <Button onClick={() => navigate("/cart")}>
                 Product was added to your cart.
@@ -95,12 +110,12 @@ const useFavoriteProducts = (): UseCartData => {
             queryClient.invalidateQueries(["cartProducts"]);
             toast.success(addCartToast);
         },
-        onError: (data: any) => {
-            toast.error(data?.response?.data?.message);
+        onError: (error: ErrorType) => {
+            toast.error(error?.response?.data?.message);
         },
     });
 
-    const editCartToast = useMemo(
+    const editCartToast = useCallback(
         () => (
             <Button onClick={() => navigate("/cart")}>
                 Quantity was edited into your cart.
@@ -124,9 +139,9 @@ const useFavoriteProducts = (): UseCartData => {
 
     return {
         cartProductsNumber: data?.cart?.length || 0,
-        cartProducts: data?.cart,
-        totalAmount: data?.total_amount,
-        totalAmountDiscount: data?.total_amount_with_discount,
+        cartProducts: data?.cart || [],
+        totalAmount: data?.total_amount || 0,
+        totalAmountDiscount: data?.total_amount_with_discount || 0,
         isLoading,
         error,
         mutateDelete,

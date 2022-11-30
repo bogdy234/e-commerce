@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -30,6 +30,15 @@ interface UseFavoriteProductData {
     error: any;
 }
 
+interface ErrorType {
+    response: {
+        data: {
+            is_token_problem: boolean;
+            message: string;
+        };
+    };
+}
+
 const useFavoriteProducts = (): UseFavoriteProductData => {
     const queryClient = useQueryClient();
     const navigate = useNavigate();
@@ -40,7 +49,7 @@ const useFavoriteProducts = (): UseFavoriteProductData => {
         error,
         data: favoriteProducts,
         isFetching,
-    } = useQuery({
+    } = useQuery<FavoriteProduct[], ErrorType>({
         queryKey: ["favoriteProducts"],
         queryFn: () => getFavoriteProducts(state?.token || ""),
         enabled: !!state?.token,
@@ -49,7 +58,6 @@ const useFavoriteProducts = (): UseFavoriteProductData => {
     });
 
     useEffect(() => {
-        // TODO: add type to error
         if (error?.response?.data?.is_token_problem) {
             dispatch({
                 type: RESET_USER,
@@ -67,15 +75,18 @@ const useFavoriteProducts = (): UseFavoriteProductData => {
                 icon: "♡",
             });
         },
-        onError: (data: any) => {
-            toast.error(data?.response?.data?.message);
+        onError: (error: ErrorType) => {
+            toast.error(error?.response?.data?.message);
         },
     });
 
-    const favoriteToast = () => (
-        <Button onClick={() => navigate("/favorites")}>
-            Product was added to your favorites.
-        </Button>
+    const favoriteToast = useCallback(
+        () => (
+            <Button onClick={() => navigate("/favorites")}>
+                Product was added to your favorites.
+            </Button>
+        ),
+        []
     );
 
     const { mutate: mutateAdd, isLoading: isLoadingAdd } = useMutation({
@@ -88,8 +99,8 @@ const useFavoriteProducts = (): UseFavoriteProductData => {
                 icon: "❤️",
             });
         },
-        onError: (data: any) => {
-            toast.error(data?.response?.data?.message);
+        onError: (error: ErrorType) => {
+            toast.error(error?.response?.data?.message);
         },
     });
 
@@ -98,7 +109,7 @@ const useFavoriteProducts = (): UseFavoriteProductData => {
         isLoadingAdd,
         isLoading,
         error,
-        favoriteProducts,
+        favoriteProducts: favoriteProducts || [],
         isFetching,
         favoriteProductsNumber: favoriteProducts?.length || 0,
         isLoadingDelete,

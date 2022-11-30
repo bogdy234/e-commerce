@@ -1,7 +1,6 @@
 import { NavOption } from "@interfaces/navbar";
 import {
     Box,
-    ClickAwayListener,
     List,
     ListItem,
     ListItemButton,

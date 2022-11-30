@@ -1,6 +1,6 @@
 import { FC, ReactElement } from "react";
 
-import { Container, Typography, Avatar, Button, Grid } from "@mui/material";
+import { Container, Typography, Avatar, Button } from "@mui/material";
 import { Stack } from "@mui/system";
 import useUser from "@hooks/user/useUser";
 
