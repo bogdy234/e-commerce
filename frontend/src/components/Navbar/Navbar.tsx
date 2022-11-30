@@ -1,6 +1,6 @@
 import { useState, ReactElement, FC, useEffect } from "react";
 import { useCookies } from "react-cookie";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 
 import Searchbar from "@components/Searchbar";
@@ -32,6 +32,9 @@ import MenuOpenIcon from "@mui/icons-material/MenuOpen";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import useCart from "@hooks/products/useCart";
 import DrawerList from "@components/DrawerList/DrawerList";
+import useSearch from "@hooks/search/useSearch";
+import { SET_SEARCH } from "@constants/search";
+import { SET_USER } from "@constants/user";
 
 const loggedInOptions = [
     {
@@ -50,10 +53,12 @@ const loggedOutOptions = [
 
 const Navbar: FC = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const queryClient = useQueryClient();
     const matches = useMediaQuery(`(min-width:${SCREEN_BREAKPOINTS.md})`);
     const matchesXs = useMediaQuery(`(min-width:${SCREEN_BREAKPOINTS.s})`);
 
+    const { dispatch: dispatchSearch } = useSearch();
     const { state, dispatch } = useUser();
     const [, , removeCookie] = useCookies(["token"]);
     const { isLoading, favoriteProductsNumber } = useFavoriteProducts();
@@ -108,12 +113,16 @@ const Navbar: FC = () => {
             navigate(href);
             return;
         }
-        dispatch({ type: "SET_USER", payload: { user: null, token: "" } });
+        dispatch({ type: SET_USER, payload: { user: null, token: "" } });
         removeCookie("token");
         queryClient.removeQueries(["favoriteProducts"]);
     };
 
     const toggleDrawer = () => setIsOpenedDrawer(!isOpenedDrawer);
+
+    const onSearch = (searchData: string) => {
+        dispatchSearch({ type: SET_SEARCH, payload: { searchData } });
+    };
 
     return (
         <AppBar>
@@ -146,7 +155,9 @@ const Navbar: FC = () => {
                         />
                     )}
                 </SwipeableDrawer>
-                <Searchbar />
+                {location.pathname === "/" ? (
+                    <Searchbar onSearch={onSearch} />
+                ) : null}
                 <Stack direction="row" spacing={3}>
                     {matchesXs ? (
                         options.map(({ href, icon, label }) => (

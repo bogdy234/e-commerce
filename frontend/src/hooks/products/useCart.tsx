@@ -14,7 +14,7 @@ import {
     useQuery,
     useQueryClient,
 } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
@@ -78,10 +78,13 @@ const useFavoriteProducts = (): UseCartData => {
         },
     });
 
-    const addCartToast = () => (
-        <Button onClick={() => navigate("/cart")}>
-            Product was added to your cart.
-        </Button>
+    const addCartToast = useMemo(
+        () => (
+            <Button onClick={() => navigate("/cart")}>
+                Product was added to your cart.
+            </Button>
+        ),
+        []
     );
 
     const { mutate: mutateAdd, isLoading: isLoadingAdd } = useMutation({
@@ -97,10 +100,13 @@ const useFavoriteProducts = (): UseCartData => {
         },
     });
 
-    const editCartToast = () => (
-        <Button onClick={() => navigate("/cart")}>
-            Quantity was edited into your cart.
-        </Button>
+    const editCartToast = useMemo(
+        () => (
+            <Button onClick={() => navigate("/cart")}>
+                Quantity was edited into your cart.
+            </Button>
+        ),
+        []
     );
 
     const { mutate: mutateEdit, isLoading: isLoadingEdit } = useMutation({

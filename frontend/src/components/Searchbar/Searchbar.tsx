@@ -4,13 +4,19 @@ import InputBase from "@mui/material/InputBase";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 
-interface SearchbarProps {}
+interface SearchbarProps {
+    onSearch: (searchData: string) => void;
+}
 
-const Searchbar: FC<SearchbarProps> = () => {
+const Searchbar: FC<SearchbarProps> = ({ onSearch }) => {
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        console.log(data);
+        const searchData = data.get("search");
+        if (typeof searchData !== "string") {
+            throw new Error("Invalid data type.");
+        }
+        onSearch(searchData);
     };
 
     return (

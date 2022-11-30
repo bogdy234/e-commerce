@@ -9,23 +9,26 @@ import "./index.css";
 import App from "./App";
 import { UserProvider } from "@contexts/UserProvider";
 import { ToastContainer } from "react-toastify";
+import { SearchProvider } from "@contexts/SearchProvider";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <React.StrictMode>
         <UserProvider>
-            <ToastContainer
-                position="top-right"
-                autoClose={2000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-            />{" "}
-            <App />
+            <SearchProvider>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={2000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+                />{" "}
+                <App />
+            </SearchProvider>
         </UserProvider>
     </React.StrictMode>
 );
