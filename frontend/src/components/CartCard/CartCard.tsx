@@ -1,28 +1,24 @@
 import { FC, ReactElement } from "react";
 
+import Price from "@components/Price";
 import { SCREEN_BREAKPOINTS } from "@constants/index";
-
+import { generateIds } from "@helpers/helpers";
+import useCart from "@hooks/products/useCart";
 import DeleteIcon from "@mui/icons-material/Delete";
-
 import {
     Button,
-    Typography,
+    Container,
     Divider,
-    Rating,
-    Stack,
-    Select,
-    MenuItem,
     FormControl,
     InputLabel,
-    Container,
+    MenuItem,
+    Rating,
+    Select,
+    Stack,
+    Typography
 } from "@mui/material";
-
 import useMediaQuery from "@mui/material/useMediaQuery";
-
 import theme from "@theme";
-import Price from "@components/Price";
-import useCart from "@hooks/products/useCart";
-import { generateIds } from "@helpers/helpers";
 
 interface CartCardProps {
     id: number;

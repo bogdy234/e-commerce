@@ -1,40 +1,37 @@
-import { useState, ReactElement, FC, useEffect } from "react";
+import { FC, ReactElement, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
 
+import DrawerList from "@components/DrawerList/DrawerList";
 import Searchbar from "@components/Searchbar";
-import { NavOption } from "@interfaces/navbar";
 import { SCREEN_BREAKPOINTS } from "@constants";
-import useUser from "@hooks/user/useUser";
+import { SET_SEARCH } from "@constants/search";
+import { SET_USER } from "@constants/user";
+import useCart from "@hooks/products/useCart";
 import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
+import useSearch from "@hooks/search/useSearch";
 import useRefreshToken from "@hooks/user/useRefreshToken";
-
-import {
-    AppBar,
-    Badge,
-    Button,
-    Stack,
-    Toolbar,
-    Typography,
-    SwipeableDrawer,
-    ClickAwayListener,
-} from "@mui/material";
-
-import PersonIcon from "@mui/icons-material/Person";
+import useUser from "@hooks/user/useUser";
+import { NavOption } from "@interfaces/navbar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
-
+import PersonIcon from "@mui/icons-material/Person";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import {
+    AppBar,
+    Badge,
+    Button,
+    ClickAwayListener,
+    Stack,
+    SwipeableDrawer,
+    Toolbar,
+    Typography
+} from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import useCart from "@hooks/products/useCart";
-import DrawerList from "@components/DrawerList/DrawerList";
-import useSearch from "@hooks/search/useSearch";
-import { SET_SEARCH } from "@constants/search";
-import { SET_USER } from "@constants/user";
+import { useQueryClient } from "@tanstack/react-query";
 
 const loggedInOptions = [
     {

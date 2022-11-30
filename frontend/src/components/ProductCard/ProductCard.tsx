@@ -1,25 +1,23 @@
 import { FC } from "react";
 
-import {
-    Card,
-    CardMedia,
-    CardHeader,
-    CardContent,
-    CardActions,
-    IconButton,
-    Typography,
-    Button,
-    Stack,
-    Rating,
-    useMediaQuery,
-} from "@mui/material";
-
+import Price from "@components/Price";
+import { SCREEN_BREAKPOINTS } from "@constants/index";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-
-import Price from "@components/Price";
+import {
+    Button,
+    Card,
+    CardActions,
+    CardContent,
+    CardHeader,
+    CardMedia,
+    IconButton,
+    Rating,
+    Stack,
+    Typography,
+    useMediaQuery
+} from "@mui/material";
 import theme from "@theme";
-import { SCREEN_BREAKPOINTS } from "@constants/index";
 
 interface ProductCard {
     title: string;

@@ -1,22 +1,19 @@
 import { FC, ReactElement } from "react";
 
+import Price from "@components/Price";
+import { SCREEN_BREAKPOINTS } from "@constants/index";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import {
     Button,
     Container,
-    Stack,
-    Typography,
-    Rating,
     Divider,
+    Rating,
+    Stack,
+    Typography
 } from "@mui/material";
-
-import DeleteIcon from "@mui/icons-material/Delete";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-
 import useMediaQuery from "@mui/material/useMediaQuery";
-
 import theme from "@theme";
-import { SCREEN_BREAKPOINTS } from "@constants/index";
-import Price from "@components/Price";
 
 interface FavoritesCardProps {
     title: string;

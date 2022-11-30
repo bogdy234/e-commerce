@@ -1,4 +1,5 @@
-import { useLocation, Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+
 import useUser from "@hooks/user/useUser";
 
 const RequireAuth = ({ allowedRoles = ["BASIC_USER", "ADMIN"] }) => {

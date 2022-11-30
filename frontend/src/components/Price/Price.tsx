@@ -1,4 +1,5 @@
 import { FC, ReactElement } from "react";
+
 import { Typography } from "@mui/material";
 
 interface PriceProps {

@@ -1,8 +1,7 @@
 import { FC, FormEvent } from "react";
-import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import IconButton from "@mui/material/IconButton";
+
 import SearchIcon from "@mui/icons-material/Search";
+import { IconButton, InputBase, Paper } from "@mui/material";
 
 interface SearchbarProps {
     onSearch: (searchData: string) => void;

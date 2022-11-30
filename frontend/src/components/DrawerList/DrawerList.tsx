@@ -1,3 +1,5 @@
+import { FC, ReactElement } from "react";
+
 import { NavOption } from "@interfaces/navbar";
 import {
     Box,
@@ -5,9 +7,8 @@ import {
     ListItem,
     ListItemButton,
     ListItemIcon,
-    ListItemText,
+    ListItemText
 } from "@mui/material";
-import { FC, ReactElement } from "react";
 
 interface DrawerListProps {
     options: NavOption[];

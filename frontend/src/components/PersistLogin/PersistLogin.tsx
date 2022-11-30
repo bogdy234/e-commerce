@@ -1,9 +1,9 @@
+import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
 
+import { RESET_USER, SET_USER } from "@constants/user";
 import useRefreshToken from "@hooks/user/useRefreshToken";
-import { useEffect } from "react";
 import useUser from "@hooks/user/useUser";
-import { SET_USER, RESET_USER } from "@constants/user";
 
 const PersistLogin = () => {
     const { dispatch } = useUser();
