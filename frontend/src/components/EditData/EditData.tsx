@@ -8,7 +8,7 @@ import {
     Modal,
     Stack,
     TextField,
-    Typography,
+    Typography
 } from "@mui/material";
 
 interface EditDataProps {
@@ -60,8 +60,6 @@ const EditData: FC<EditDataProps> = ({ open, setOpen }): ReactElement => {
             handleClose();
             return;
         }
-
-        console.log("heree");
     };
 
     return (

@@ -1,22 +1,20 @@
 import { FC, ReactElement } from "react";
 
+import FavoritesCard from "@components/FavoritesCard";
+import { SCREEN_BREAKPOINTS } from "@constants";
+import { generateIds, getMeanRatingComments } from "@helpers/helpers";
+import useCart from "@hooks/products/useCart";
+import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
+import { Product } from "@interfaces/product";
 import {
     Box,
-    Skeleton,
     Container,
-    Typography,
-    Stack,
     Divider,
+    Skeleton,
+    Stack,
+    Typography
 } from "@mui/material";
-
 import useMediaQuery from "@mui/material/useMediaQuery";
-
-import { Product } from "@interfaces/product";
-import { SCREEN_BREAKPOINTS } from "@constants";
-import FavoritesCard from "@components/FavoritesCard";
-import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
-import useCart from "@hooks/products/useCart";
-import { generateIds, getMeanRatingComments } from "@helpers/helpers";
 
 const skeletonIds = generateIds(2);
 
@@ -35,7 +33,6 @@ const Favorites: FC = (): ReactElement => {
     };
 
     const addToCart = (pid: number) => {
-        console.log(pid);
         mutateAdd({ productId: pid, quantity: 1 });
     };
 

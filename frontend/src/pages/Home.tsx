@@ -15,7 +15,7 @@ import {
     Grid,
     Skeleton,
     Stack,
-    Typography,
+    Typography
 } from "@mui/material";
 
 const skeletonIds = generateIds(10);
@@ -59,8 +59,6 @@ const Home: FC = () => {
     const removeTitleSearch = () => dispatchSearch({ type: RESET_SEARCH });
 
     const removeCategoryFilter = () => dispatchSearch({ type: RESET_CATEGORY });
-
-    console.log(category);
 
     return (
         <Container sx={{ mt: 16, pb: 12 }} maxWidth="lg">
