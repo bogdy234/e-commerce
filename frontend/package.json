@@ -3,6 +3,11 @@
     "private": true,
     "version": "0.0.0",
     "type": "module",
+    "husky": {
+        "hooks": {
+            "pre-commit": "yarn hook"
+        }
+    },
     "scripts": {
         "dev": "vite --host 0.0.0.0 --port 3000",
         "build": "tsc && vite build",
@@ -11,7 +16,9 @@
         "tsc": "tsc --noEmit",
         "format:write": "prettier --write .",
         "format:check": "prettier --check .",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "prepare": "cd .. && husky install frontend/.husky",
+        "hook": "yarn lint && yarn tsc && yarn format:check"
     },
     "dependencies": {
         "@emotion/react": "^11.10.5",
@@ -33,6 +40,7 @@
         "@types/react-dom": "^18.0.8",
         "@types/react-router-dom": "^5.3.3",
         "@vitejs/plugin-react": "^2.2.0",
+        "husky": "^8.0.0",
         "prettier": "^2.7.1",
         "typescript": "^4.6.4",
         "vite": "^3.2.3",
