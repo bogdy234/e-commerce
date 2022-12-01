@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { createUser } from "@api/user";
 import ERRORS from "@constants/errors";
-import { isValidEmail, isValidPassword } from "@helpers/helpers";
+import {
+    containOnlyLetters,
+    isValidEmail,
+    isValidPassword
+} from "@helpers/helpers";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const useRegisterMutation = () => {
     const queryClient = useQueryClient();
@@ -34,13 +38,20 @@ const useRegisterMutation = () => {
         confirmPassword: FormDataEntryValue | null
     ) => {
         let isValid = true;
+
         if (!firstName) {
             setFirstNameError(ERRORS.NO_EMPTY_FIELD);
+            isValid = false;
+        } else if (!containOnlyLetters(firstName as string)) {
+            setFirstNameError(ERRORS.ONLY_LETTERS);
             isValid = false;
         }
 
         if (!lastName) {
             setLastNameError(ERRORS.NO_EMPTY_FIELD);
+            isValid = false;
+        } else if (!containOnlyLetters(lastName as string)) {
+            setLastNameError(ERRORS.ONLY_LETTERS);
             isValid = false;
         }
 
@@ -67,6 +78,7 @@ const useRegisterMutation = () => {
             setConfirmPasswordError(ERRORS.PASSWORDS_NOT_MATCH);
             isValid = false;
         }
+
         return isValid;
     };
 

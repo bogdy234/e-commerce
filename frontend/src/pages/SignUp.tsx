@@ -1,16 +1,15 @@
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { CircularProgress } from "@mui/material";
-
-import { User } from "@interfaces/user";
 import useRegisterMutation from "@hooks/user/useRegisterMutation";
+import { User } from "@interfaces/user";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { CircularProgress } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 const SignUp = () => {
     const {

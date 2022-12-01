@@ -53,4 +53,8 @@ export const filterProductsByName = (products: Product[], title: string) =>
               product.title.toLowerCase().includes(title.toLowerCase())
           );
 
+export const containOnlyLetters = (str: string) => {
+    return /^[a-zA-Z]+$/.test(str);
+};
+
 export default {};

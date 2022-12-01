@@ -1,11 +1,16 @@
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, useState } from "react";
 
-import { Container, Typography, Avatar, Button } from "@mui/material";
-import { Stack } from "@mui/system";
+import EditData from "@components/EditData";
 import useUser from "@hooks/user/useUser";
+import { Avatar, Button, Container, Typography } from "@mui/material";
+import { Stack } from "@mui/system";
 
 const Profile: FC = (): ReactElement => {
     const { state } = useUser();
+    const [open, setOpen] = useState(true);
+
+    const openEdit = () => setOpen(true);
+
     return (
         <Container sx={{ mt: 14 }}>
             <Container
@@ -17,6 +22,7 @@ const Profile: FC = (): ReactElement => {
                     borderRadius: 2,
                 }}
             >
+                <EditData open={open} setOpen={setOpen} />
                 <Typography variant="h5" align="center">
                     Account data
                 </Typography>
@@ -35,7 +41,9 @@ const Profile: FC = (): ReactElement => {
                             </Typography>
                         </Stack>
                     </Stack>
-                    <Button variant="outlined">Edit data</Button>
+                    <Button variant="outlined" onClick={openEdit}>
+                        Edit data
+                    </Button>
                 </Stack>
             </Container>
         </Container>
