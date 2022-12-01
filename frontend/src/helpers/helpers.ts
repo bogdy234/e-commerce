@@ -1,5 +1,4 @@
 import { Comment } from "@interfaces/comment";
-import { Product } from "@interfaces/product";
 
 export const isValidEmail = (email: string) => {
     const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
@@ -45,13 +44,6 @@ export const generateIds = (
     }
     return array;
 };
-
-export const filterProductsByName = (products: Product[], title: string) =>
-    title === ""
-        ? products
-        : products.filter((product) =>
-              product.title.toLowerCase().includes(title.toLowerCase())
-          );
 
 export const containOnlyLetters = (str: string) => {
     return /^[a-zA-Z]+$/.test(str);

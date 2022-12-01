@@ -2,12 +2,10 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-
 import { loginUser } from "@api/user";
+import { validateEmail, validatePassword } from "@helpers/validate";
 import useUser from "@hooks/user/useUser";
-import ERRORS from "@constants/errors";
-import { isValidEmail } from "@helpers/helpers";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const useLoginMutation = () => {
     const queryClient = useQueryClient();
@@ -27,22 +25,29 @@ const useLoginMutation = () => {
         email: FormDataEntryValue | null,
         password: FormDataEntryValue | null
     ) => {
-        let isValid = true;
+        const { valid: validEmail, error: errorEmail } = validateEmail(
+            email as string
+        );
 
-        if (!email) {
-            setEmailError(ERRORS.NO_EMPTY_FIELD);
-            isValid = false;
+        if (!validEmail) {
+            setEmailError(errorEmail);
         }
 
-        if (!password) {
-            setPasswordError(ERRORS.NO_EMPTY_FIELD);
-            isValid = false;
+        const { valid: validPassword, error: errorPassword } = validatePassword(
+            password as string
+        );
+
+        if (!validPassword) {
+            setPasswordError(errorPassword);
         }
 
-        if (!isValidEmail(email as string)) {
-            setEmailError(ERRORS.INVALID_EMAIL);
-            isValid = false;
-        }
+        const valid = {
+            validEmail,
+            validPassword,
+        };
+
+        const isValid = !Object.values(valid).some((element) => !element);
+
         return isValid;
     };
 

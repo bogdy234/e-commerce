@@ -7,7 +7,7 @@ import {
     ListItem,
     ListItemButton,
     ListItemIcon,
-    ListItemText
+    ListItemText,
 } from "@mui/material";
 
 interface DrawerListProps {

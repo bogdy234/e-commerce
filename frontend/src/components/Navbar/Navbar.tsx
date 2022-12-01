@@ -1,18 +1,21 @@
-import { FC, ReactElement, useEffect, useState } from "react";
+import { FC, ReactElement, useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
+import CustomMenuList from "@components/CustomMenuList";
 import DrawerList from "@components/DrawerList/DrawerList";
 import Searchbar from "@components/Searchbar";
 import { SCREEN_BREAKPOINTS } from "@constants";
-import { SET_SEARCH } from "@constants/search";
+import { SET_CATEGORY, SET_SEARCH } from "@constants/search";
 import { SET_USER } from "@constants/user";
 import useCart from "@hooks/products/useCart";
 import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
 import useSearch from "@hooks/search/useSearch";
+import useClickOutside from "@hooks/useClickOutside";
 import useRefreshToken from "@hooks/user/useRefreshToken";
 import useUser from "@hooks/user/useUser";
 import { NavOption } from "@interfaces/navbar";
+import CategoryIcon from "@mui/icons-material/Category";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import HomeIcon from "@mui/icons-material/Home";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -28,7 +31,7 @@ import {
     Stack,
     SwipeableDrawer,
     Toolbar,
-    Typography
+    Typography,
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useQueryClient } from "@tanstack/react-query";
@@ -62,9 +65,11 @@ const Navbar: FC = () => {
     const { isLoading: isLoadingCart, cartProductsNumber } = useCart();
     const { isLoading: isLoadingUserData } = useRefreshToken();
     const [isOpenedDrawer, setIsOpenedDrawer] = useState<boolean>(false);
+    const [isOpenedFilterMenu, setIsOpenedFilterMenu] =
+        useState<boolean>(false);
+    const filterMenuRef = useRef(null);
 
     const [options, setOptions] = useState<NavOption[]>([]);
-
     useEffect(() => {
         if (isLoadingUserData) {
             return;
@@ -121,13 +126,26 @@ const Navbar: FC = () => {
         dispatchSearch({ type: SET_SEARCH, payload: { searchData } });
     };
 
+    const toggleFilterMenu = () => setIsOpenedFilterMenu(!isOpenedFilterMenu);
+
+    const handleClickCategory = (category: string) => {
+        dispatchSearch({ type: SET_CATEGORY, payload: { category } });
+    };
+
+    useClickOutside(filterMenuRef, () => setIsOpenedFilterMenu(false));
+
     return (
         <AppBar>
-            <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Toolbar
+                sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    height: 64,
+                }}
+            >
                 <Link to="/">
                     <HomeIcon sx={{ color: "white" }} />
                 </Link>
-
                 <SwipeableDrawer
                     anchor="right"
                     open={isOpenedDrawer}
@@ -153,7 +171,20 @@ const Navbar: FC = () => {
                     )}
                 </SwipeableDrawer>
                 {location.pathname === "/" ? (
-                    <Searchbar onSearch={onSearch} />
+                    <Stack direction="row" alignItems="center">
+                        <Searchbar onSearch={onSearch} />
+                        <Button
+                            sx={{ color: "white" }}
+                            onClick={toggleFilterMenu}
+                        >
+                            <CategoryIcon />
+                            <CustomMenuList
+                                handleClickCategory={handleClickCategory}
+                                open={isOpenedFilterMenu}
+                                ref={filterMenuRef}
+                            />
+                        </Button>
+                    </Stack>
                 ) : null}
                 <Stack direction="row" spacing={3}>
                     {matchesXs ? (

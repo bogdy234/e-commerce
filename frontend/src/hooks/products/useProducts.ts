@@ -1,5 +1,5 @@
 import { getProducts } from "@api/products/products";
-import { filterProductsByName } from "@helpers/helpers";
+import { filterProducts } from "@helpers/filter";
 import useSearch from "@hooks/search/useSearch";
 import { Product } from "@interfaces/product";
 import { useQuery } from "@tanstack/react-query";
@@ -18,7 +18,7 @@ const useProducts = (): UseProductsData => {
         queryKey: ["products"],
         queryFn: getProducts,
         select: (response) =>
-            filterProductsByName(response, state?.searchData || ""),
+            filterProducts(response, state?.searchData, state?.category),
     });
 
     return { isLoading, error, data, isFetching };

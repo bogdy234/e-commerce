@@ -15,7 +15,7 @@ import {
     Rating,
     Select,
     Stack,
-    Typography
+    Typography,
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import theme from "@theme";

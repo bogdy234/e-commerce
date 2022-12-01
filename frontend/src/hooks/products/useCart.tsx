@@ -6,7 +6,7 @@ import {
     addCartProduct,
     deleteCartProduct,
     editCartProduct,
-    getCartProducts
+    getCartProducts,
 } from "@api/products/cart";
 import { RESET_USER } from "@constants/user";
 import useUser from "@hooks/user/useUser";
@@ -16,7 +16,7 @@ import {
     UseMutateFunction,
     useMutation,
     useQuery,
-    useQueryClient
+    useQueryClient,
 } from "@tanstack/react-query";
 
 interface MutateAddParams {

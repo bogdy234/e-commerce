@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import {
     addFavoriteProduct,
     deleteFavoriteProduct,
-    getFavoriteProducts
+    getFavoriteProducts,
 } from "@api/products/favoriteProducts";
 import { RESET_USER } from "@constants/user";
 import useUser from "@hooks/user/useUser";
@@ -15,7 +15,7 @@ import {
     UseMutateFunction,
     useMutation,
     useQuery,
-    useQueryClient
+    useQueryClient,
 } from "@tanstack/react-query";
 
 interface UseFavoriteProductData {

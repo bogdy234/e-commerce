@@ -7,7 +7,7 @@ import { Stack } from "@mui/system";
 
 const Profile: FC = (): ReactElement => {
     const { state } = useUser();
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     const openEdit = () => setOpen(true);
 
@@ -22,7 +22,6 @@ const Profile: FC = (): ReactElement => {
                     borderRadius: 2,
                 }}
             >
-                <EditData open={open} setOpen={setOpen} />
                 <Typography variant="h5" align="center">
                     Account data
                 </Typography>
@@ -41,6 +40,7 @@ const Profile: FC = (): ReactElement => {
                             </Typography>
                         </Stack>
                     </Stack>
+                    <EditData open={open} setOpen={setOpen} />
                     <Button variant="outlined" onClick={openEdit}>
                         Edit data
                     </Button>

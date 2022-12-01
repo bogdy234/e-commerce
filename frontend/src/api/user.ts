@@ -1,6 +1,7 @@
+import axios from "axios";
+
 import { SERVER_URL } from "@constants/index";
 import { User, UserLoginParams } from "@interfaces/user";
-import axios from "axios";
 
 export const createUser = async (data: User) => {
     const { data: response } = await axios.post(
@@ -28,4 +29,8 @@ export const getUserData = async (token: string) => {
     });
 
     return response.user;
+};
+
+export const editUser = () => {
+    // to be implemented
 };

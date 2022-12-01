@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
 import ProductCard from "@components/ProductCard";
-import { RESET_SEARCH } from "@constants/search";
+import { RESET_CATEGORY, RESET_SEARCH } from "@constants/search";
 import { generateIds, getMeanRatingComments } from "@helpers/helpers";
 import useCart from "@hooks/products/useCart";
 import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
@@ -15,7 +15,7 @@ import {
     Grid,
     Skeleton,
     Stack,
-    Typography
+    Typography,
 } from "@mui/material";
 
 const skeletonIds = generateIds(10);
@@ -23,7 +23,10 @@ const skeletonIds = generateIds(10);
 const Home: FC = () => {
     const navigate = useNavigate();
     const { state } = useUser();
-    const { state: searchState, dispatch: dispatchSearch } = useSearch();
+    const {
+        state: { searchData, category },
+        dispatch: dispatchSearch,
+    } = useSearch();
 
     const { isLoading, error, data } = useProducts();
     const { mutateAdd, favoriteProducts, mutateDelete } = useFavoriteProducts();
@@ -53,28 +56,52 @@ const Home: FC = () => {
     const addToCart = (pid: number) =>
         mutateAddCart({ productId: pid, quantity: 1 });
 
-    const removeFilter = () => dispatchSearch({ type: RESET_SEARCH });
+    const removeTitleSearch = () => dispatchSearch({ type: RESET_SEARCH });
+
+    const removeCategoryFilter = () => dispatchSearch({ type: RESET_CATEGORY });
+
+    console.log(category);
 
     return (
-        <Container sx={{ mt: 12, pb: 12 }} maxWidth={false}>
+        <Container sx={{ mt: 16, pb: 12 }} maxWidth="lg">
             {error && (
                 <Typography variant="h1" color="red">
                     Error
                 </Typography>
             )}
-            {searchState?.searchData && (
+            {(category || searchData) && (
                 <Stack
                     alignItems="center"
                     justifyContent="center"
                     spacing={1}
                     sx={{ mb: 6 }}
                 >
-                    <Typography variant="h5">
-                        Current search filter: {searchState?.searchData}
-                    </Typography>
-                    <Button variant="outlined" onClick={removeFilter}>
-                        Remove filter
-                    </Button>
+                    {searchData && (
+                        <Stack direction="row" spacing={2}>
+                            <Typography variant="h5">
+                                Current search title: {searchData}
+                            </Typography>
+                            <Button
+                                variant="outlined"
+                                onClick={removeTitleSearch}
+                            >
+                                Remove title filter
+                            </Button>
+                        </Stack>
+                    )}
+                    {category && (
+                        <Stack direction="row" spacing={2}>
+                            <Typography variant="h5">
+                                Current category: {category}
+                            </Typography>
+                            <Button
+                                variant="outlined"
+                                onClick={removeCategoryFilter}
+                            >
+                                Remove category filter
+                            </Button>
+                        </Stack>
+                    )}
                 </Stack>
             )}
             <Grid container spacing={4} justifyContent="center">

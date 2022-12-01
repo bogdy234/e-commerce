@@ -2,12 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { createUser } from "@api/user";
-import ERRORS from "@constants/errors";
 import {
-    containOnlyLetters,
-    isValidEmail,
-    isValidPassword
-} from "@helpers/helpers";
+    validateConfirmPassword,
+    validateEmail,
+    validateName,
+    validatePassword,
+} from "@helpers/validate";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const useRegisterMutation = () => {
@@ -37,47 +37,56 @@ const useRegisterMutation = () => {
         password: FormDataEntryValue | null,
         confirmPassword: FormDataEntryValue | null
     ) => {
-        let isValid = true;
-
-        if (!firstName) {
-            setFirstNameError(ERRORS.NO_EMPTY_FIELD);
-            isValid = false;
-        } else if (!containOnlyLetters(firstName as string)) {
-            setFirstNameError(ERRORS.ONLY_LETTERS);
-            isValid = false;
+        const { valid: validFirstName, error: errorFirstName } = validateName(
+            firstName as string
+        );
+        if (!validFirstName) {
+            setFirstNameError(errorFirstName);
         }
 
-        if (!lastName) {
-            setLastNameError(ERRORS.NO_EMPTY_FIELD);
-            isValid = false;
-        } else if (!containOnlyLetters(lastName as string)) {
-            setLastNameError(ERRORS.ONLY_LETTERS);
-            isValid = false;
+        const { valid: validLastName, error: errorLastName } = validateName(
+            lastName as string
+        );
+
+        if (!validLastName) {
+            setLastNameError(errorLastName);
         }
 
-        if (!email) {
-            setEmailError(ERRORS.NO_EMPTY_FIELD);
-            isValid = false;
-        } else if (!isValidEmail(email as string)) {
-            setEmailError(ERRORS.INVALID_EMAIL);
-            isValid = false;
+        const { valid: validEmail, error: errorEmail } = validateEmail(
+            email as string
+        );
+
+        if (!validEmail) {
+            setEmailError(errorEmail);
         }
 
-        if (!password) {
-            setPasswordError(ERRORS.NO_EMPTY_FIELD);
-            isValid = false;
-        } else if (!isValidPassword(password as string)) {
-            setPasswordError(ERRORS.INVALID_PASSWORD);
-            isValid = false;
+        const { valid: validPassword, error: errorPassword } = validatePassword(
+            password as string
+        );
+
+        if (!validPassword) {
+            setPasswordError(errorPassword);
         }
 
-        if (!confirmPassword) {
-            setConfirmPasswordError(ERRORS.NO_EMPTY_FIELD);
-            isValid = false;
-        } else if (password !== confirmPassword) {
-            setConfirmPasswordError(ERRORS.PASSWORDS_NOT_MATCH);
-            isValid = false;
+        const { valid: validConfirmPassword, error: errorConfirmPassword } =
+            validateConfirmPassword(
+                password as string,
+                confirmPassword as string
+            );
+
+        if (!validConfirmPassword) {
+            setConfirmPasswordError(errorConfirmPassword);
         }
+
+        const valid = {
+            validFirstName,
+            validLastName,
+            validEmail,
+            validPassword,
+            validConfirmPassword,
+        };
+
+        const isValid = !Object.values(valid).some((element) => !element);
 
         return isValid;
     };
@@ -91,7 +100,6 @@ const useRegisterMutation = () => {
                 data?.response?.data?.message ||
                     "There was an error. Please try again later."
             );
-            alert("there was an error");
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: ["createUser"] });

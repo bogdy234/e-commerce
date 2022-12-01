@@ -10,7 +10,7 @@ import {
     Divider,
     Rating,
     Stack,
-    Typography
+    Typography,
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import theme from "@theme";

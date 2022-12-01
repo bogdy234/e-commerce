@@ -15,7 +15,7 @@ import {
     Rating,
     Stack,
     Typography,
-    useMediaQuery
+    useMediaQuery,
 } from "@mui/material";
 import theme from "@theme";
 
@@ -90,6 +90,7 @@ const ProductCard: FC<ProductCard> = ({
                         Not in stock
                     </Typography>
                 )}
+                {/* <Typography variant="body2">Category: </Typography> */}
             </CardContent>
             <Stack direction="row" spacing={2} justifyContent="center">
                 <CardActions sx={{ p: 3 }}>

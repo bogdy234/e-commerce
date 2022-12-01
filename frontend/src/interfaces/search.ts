@@ -1,17 +1,22 @@
 export interface SearchState {
     searchData: string;
+    category: string;
 }
 
-export type SearchActionTypes = "SET_SEARCH" | "RESET_SEARCH";
+export type SearchActionTypes =
+    | "SET_SEARCH"
+    | "RESET_SEARCH"
+    | "SET_CATEGORY"
+    | "RESET_CATEGORY";
 
 export interface Action {
     type: SearchActionTypes;
-    payload?: SearchState;
+    payload?: Partial<SearchState>;
 }
 
 export type Dispatch = (action: Action) => void;
 
 export interface SearchContextType {
-    state: SearchState | null;
+    state: SearchState;
     dispatch: Dispatch;
 }
