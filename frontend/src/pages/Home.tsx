@@ -1,21 +1,30 @@
 import { FC } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Container, Grid, Skeleton, Typography } from "@mui/material";
-
-import useProducts from "@hooks/products/useProducts";
-import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
 import ProductCard from "@components/ProductCard";
-import useUser from "@hooks/user/useUser";
-import useCart from "@hooks/products/useCart";
-
+import { RESET_SEARCH } from "@constants/search";
 import { generateIds, getMeanRatingComments } from "@helpers/helpers";
+import useCart from "@hooks/products/useCart";
+import useFavoriteProducts from "@hooks/products/useFavoriteProducts";
+import useProducts from "@hooks/products/useProducts";
+import useSearch from "@hooks/search/useSearch";
+import useUser from "@hooks/user/useUser";
+import {
+    Button,
+    Container,
+    Grid,
+    Skeleton,
+    Stack,
+    Typography
+} from "@mui/material";
 
 const skeletonIds = generateIds(10);
 
 const Home: FC = () => {
     const navigate = useNavigate();
     const { state } = useUser();
+    const { state: searchState, dispatch: dispatchSearch } = useSearch();
+
     const { isLoading, error, data } = useProducts();
     const { mutateAdd, favoriteProducts, mutateDelete } = useFavoriteProducts();
     const { mutateAdd: mutateAddCart } = useCart();
@@ -41,9 +50,10 @@ const Home: FC = () => {
         }
     };
 
-    const addToCart = (pid: number) => {
+    const addToCart = (pid: number) =>
         mutateAddCart({ productId: pid, quantity: 1 });
-    };
+
+    const removeFilter = () => dispatchSearch({ type: RESET_SEARCH });
 
     return (
         <Container sx={{ mt: 12, pb: 12 }} maxWidth={false}>
@@ -51,6 +61,21 @@ const Home: FC = () => {
                 <Typography variant="h1" color="red">
                     Error
                 </Typography>
+            )}
+            {searchState?.searchData && (
+                <Stack
+                    alignItems="center"
+                    justifyContent="center"
+                    spacing={1}
+                    sx={{ mb: 6 }}
+                >
+                    <Typography variant="h5">
+                        Current search filter: {searchState?.searchData}
+                    </Typography>
+                    <Button variant="outlined" onClick={removeFilter}>
+                        Remove filter
+                    </Button>
+                </Stack>
             )}
             <Grid container spacing={4} justifyContent="center">
                 {isLoading &&
