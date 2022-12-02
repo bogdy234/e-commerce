@@ -8,7 +8,8 @@ from flask_sqlalchemy import SQLAlchemy
 load_dotenv(find_dotenv())
 
 app = Flask(__name__)
-CORS(app)
+
+cors = CORS(app, supports_credentials=True)
 SECRET_KEY = os.environ.get("SECRET_KEY")
 app.secret_key = SECRET_KEY
 

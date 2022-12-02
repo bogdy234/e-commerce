@@ -12,12 +12,15 @@ def login():
         permanent_session = request.json["remember"]
         data_login = LoginController().login(email, password, permanent_session)
         resp = make_response(jsonify(data_login), data_login.get("code", 500))
+        resp.headers['Access-Control-Allow-Credentials'] = 'true'
+        resp.headers['Access-Control-Allow-Headers'] = 'Accept'
+        resp.headers['Access-Control-Allow-Origin'] = 'http://localhost:3001'
+        
         if data_login.get("token"):
             resp.set_cookie(
                 "jwt",
                 data_login.get("token"),
                 secure=False if not production else True,
-                domain="0.0.0.0",
                 httponly=True,
             )
         return resp

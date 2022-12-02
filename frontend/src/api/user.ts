@@ -15,7 +15,10 @@ export const createUser = async (data: User) => {
 export const loginUser = async (data: UserLoginParams) => {
     const { data: response } = await axios.post(
         `${SERVER_URL}/api/users/login`,
-        data
+        data,
+        {
+            withCredentials: true
+        }
     );
 
     return { user: response.user, token: response.token };
