@@ -10,7 +10,7 @@ import {
     Divider,
     Rating,
     Stack,
-    Typography,
+    Typography
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import theme from "@theme";
@@ -36,7 +36,7 @@ const FavoritesCard: FC<FavoritesCardProps> = ({
     reducedPrice,
     onClickRemove,
     addToCart,
-    inStock = true,
+    inStock = true
 }): ReactElement => {
     const matches = useMediaQuery(`(min-width:${SCREEN_BREAKPOINTS.md})`);
 

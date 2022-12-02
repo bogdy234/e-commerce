@@ -18,12 +18,12 @@ const PersistLogin = () => {
                 type: SET_USER,
                 payload: {
                     user: data.user,
-                    token: data.token,
-                },
+                    token: data.token
+                }
             });
         } else {
             dispatch({
-                type: RESET_USER,
+                type: RESET_USER
             });
         }
     }, [isLoading, data]);

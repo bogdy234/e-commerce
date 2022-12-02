@@ -28,7 +28,7 @@ const SignIn: FC = () => {
         formError,
         mutate,
         isLoading,
-        validateInputs,
+        validateInputs
     } = useLoginMutation();
 
     const { state } = useUser();
@@ -45,7 +45,7 @@ const SignIn: FC = () => {
         const userData = {
             email: data.get("email"),
             password: data.get("password"),
-            remember: data.get("remember") || "",
+            remember: data.get("remember") || ""
         };
         const { email, password, remember } = userData;
         if (
@@ -74,7 +74,7 @@ const SignIn: FC = () => {
                     marginTop: 14,
                     display: "flex",
                     flexDirection: "column",
-                    alignItems: "center",
+                    alignItems: "center"
                 }}
             >
                 <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>

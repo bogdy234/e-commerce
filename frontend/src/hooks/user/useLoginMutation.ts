@@ -43,7 +43,7 @@ const useLoginMutation = () => {
 
         const valid = {
             validEmail,
-            validPassword,
+            validPassword
         };
 
         const isValid = !Object.values(valid).some((element) => !element);
@@ -66,7 +66,7 @@ const useLoginMutation = () => {
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: ["loginUser"] });
-        },
+        }
     });
 
     return {
@@ -76,7 +76,7 @@ const useLoginMutation = () => {
         isLoading,
         emailError,
         passwordError,
-        validateInputs,
+        validateInputs
     };
 };
 

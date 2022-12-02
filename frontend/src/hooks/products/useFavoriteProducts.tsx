@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import {
     addFavoriteProduct,
     deleteFavoriteProduct,
-    getFavoriteProducts,
+    getFavoriteProducts
 } from "@api/products/favoriteProducts";
 import { RESET_USER } from "@constants/user";
 import useUser from "@hooks/user/useUser";
@@ -15,7 +15,7 @@ import {
     UseMutateFunction,
     useMutation,
     useQuery,
-    useQueryClient,
+    useQueryClient
 } from "@tanstack/react-query";
 
 interface UseFavoriteProductData {
@@ -48,19 +48,19 @@ const useFavoriteProducts = (): UseFavoriteProductData => {
         isLoading,
         error,
         data: favoriteProducts,
-        isFetching,
+        isFetching
     } = useQuery<FavoriteProduct[], ErrorType>({
         queryKey: ["favoriteProducts"],
         queryFn: () => getFavoriteProducts(state?.token || ""),
         enabled: !!state?.token,
         retry: false,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: false
     });
 
     useEffect(() => {
         if (error?.response?.data?.is_token_problem) {
             dispatch({
-                type: RESET_USER,
+                type: RESET_USER
             });
         }
     }, [error]);
@@ -72,12 +72,12 @@ const useFavoriteProducts = (): UseFavoriteProductData => {
         onSuccess: () => {
             queryClient.invalidateQueries(["favoriteProducts"]);
             toast.success("Product was removed from your favorites.", {
-                icon: "♡",
+                icon: "♡"
             });
         },
         onError: (error: ErrorType) => {
             toast.error(error?.response?.data?.message);
-        },
+        }
     });
 
     const favoriteToast = useCallback(
@@ -96,12 +96,12 @@ const useFavoriteProducts = (): UseFavoriteProductData => {
         onSuccess: () => {
             queryClient.invalidateQueries(["favoriteProducts"]);
             toast.success(favoriteToast, {
-                icon: "❤️",
+                icon: "❤️"
             });
         },
         onError: (error: ErrorType) => {
             toast.error(error?.response?.data?.message);
-        },
+        }
     });
 
     return {
@@ -113,7 +113,7 @@ const useFavoriteProducts = (): UseFavoriteProductData => {
         isFetching,
         favoriteProductsNumber: favoriteProducts?.length || 0,
         isLoadingDelete,
-        mutateDelete,
+        mutateDelete
     };
 };
 

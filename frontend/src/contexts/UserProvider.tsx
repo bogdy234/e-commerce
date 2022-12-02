@@ -10,7 +10,7 @@ interface UserProviderProps {
 // first make the token null to use as isLoading on require auth
 const initialState: UserState = {
     user: null,
-    token: null,
+    token: null
 };
 
 const UserContext = createContext<UserContextType>({} as UserContextType);
@@ -20,13 +20,13 @@ const userReducer = (state = initialState, action: Action) => {
         case SET_USER: {
             return {
                 ...state,
-                ...action.payload,
+                ...action.payload
             };
         }
         case RESET_USER: {
             return {
                 ...initialState,
-                token: "",
+                token: ""
             };
         }
         default: {

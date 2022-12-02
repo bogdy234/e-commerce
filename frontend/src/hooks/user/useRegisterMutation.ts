@@ -6,7 +6,7 @@ import {
     validateConfirmPassword,
     validateEmail,
     validateName,
-    validatePassword,
+    validatePassword
 } from "@helpers/validate";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -83,7 +83,7 @@ const useRegisterMutation = () => {
             validLastName,
             validEmail,
             validPassword,
-            validConfirmPassword,
+            validConfirmPassword
         };
 
         const isValid = !Object.values(valid).some((element) => !element);
@@ -103,7 +103,7 @@ const useRegisterMutation = () => {
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: ["createUser"] });
-        },
+        }
     });
 
     return {
@@ -116,7 +116,7 @@ const useRegisterMutation = () => {
         mutate,
         isLoading,
         validateInputs,
-        clearErrors,
+        clearErrors
     };
 };
 

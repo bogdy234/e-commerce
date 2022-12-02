@@ -6,7 +6,7 @@ import {
     addCartProduct,
     deleteCartProduct,
     editCartProduct,
-    getCartProducts,
+    getCartProducts
 } from "@api/products/cart";
 import { RESET_USER } from "@constants/user";
 import useUser from "@hooks/user/useUser";
@@ -16,7 +16,7 @@ import {
     UseMutateFunction,
     useMutation,
     useQuery,
-    useQueryClient,
+    useQueryClient
 } from "@tanstack/react-query";
 
 interface MutateAddParams {
@@ -69,13 +69,13 @@ const useFavoriteProducts = (): UseCartData => {
         queryFn: () => getCartProducts(state?.token || ""),
         enabled: !!state?.token,
         retry: false,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: false
     });
 
     useEffect(() => {
         if (error?.response?.data?.is_token_problem) {
             dispatch({
-                type: RESET_USER,
+                type: RESET_USER
             });
         }
     }, [error]);
@@ -90,7 +90,7 @@ const useFavoriteProducts = (): UseCartData => {
         },
         onError: (error: ErrorType) => {
             toast.error(error?.response?.data?.message);
-        },
+        }
     });
 
     const addCartToast = useCallback(
@@ -112,7 +112,7 @@ const useFavoriteProducts = (): UseCartData => {
         },
         onError: (error: ErrorType) => {
             toast.error(error?.response?.data?.message);
-        },
+        }
     });
 
     const editCartToast = useCallback(
@@ -134,7 +134,7 @@ const useFavoriteProducts = (): UseCartData => {
         },
         onError: (data: any) => {
             toast.error(data?.response?.data?.message);
-        },
+        }
     });
 
     return {
@@ -149,7 +149,7 @@ const useFavoriteProducts = (): UseCartData => {
         isLoadingDelete,
         isLoadingAdd,
         mutateEdit,
-        isLoadingEdit,
+        isLoadingEdit
     };
 };
 

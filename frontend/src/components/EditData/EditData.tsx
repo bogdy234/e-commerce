@@ -8,7 +8,7 @@ import {
     Modal,
     Stack,
     TextField,
-    Typography,
+    Typography
 } from "@mui/material";
 
 interface EditDataProps {
@@ -24,7 +24,7 @@ const style = {
     width: 400,
     bgcolor: "background.paper",
     boxShadow: 24,
-    p: 4,
+    p: 4
 };
 
 const EditData: FC<EditDataProps> = ({ open, setOpen }): ReactElement => {
@@ -39,7 +39,7 @@ const EditData: FC<EditDataProps> = ({ open, setOpen }): ReactElement => {
         const userData = {
             first_name: data.get("firstName"),
             last_name: data.get("lastName"),
-            email: data.get("email"),
+            email: data.get("email")
         };
 
         const { first_name, last_name, email } = userData;
@@ -84,7 +84,7 @@ const EditData: FC<EditDataProps> = ({ open, setOpen }): ReactElement => {
                         label="First Name"
                         autoFocus
                         inputProps={{
-                            maxLength: 50,
+                            maxLength: 50
                         }}
                         defaultValue={state?.user?.first_name}
                         // error={!!firstNameError}

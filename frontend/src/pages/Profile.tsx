@@ -19,7 +19,7 @@ const Profile: FC = (): ReactElement => {
                     background: "white",
                     height: 280,
                     p: 4,
-                    borderRadius: 2,
+                    borderRadius: 2
                 }}
             >
                 <Typography variant="h5" align="center">

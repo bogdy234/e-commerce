@@ -15,7 +15,7 @@ import {
     Grid,
     Skeleton,
     Stack,
-    Typography,
+    Typography
 } from "@mui/material";
 
 const skeletonIds = generateIds(10);
@@ -25,7 +25,7 @@ const Home: FC = () => {
     const { state } = useUser();
     const {
         state: { searchData, category },
-        dispatch: dispatchSearch,
+        dispatch: dispatchSearch
     } = useSearch();
 
     const { isLoading, error, data } = useProducts();
@@ -121,7 +121,7 @@ const Home: FC = () => {
                         price_with_discount,
                         imgUrl,
                         quantity,
-                        comments,
+                        comments
                     }) => (
                         <Grid item key={`product-${pid}`}>
                             <ProductCard

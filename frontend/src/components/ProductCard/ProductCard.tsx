@@ -15,7 +15,7 @@ import {
     Rating,
     Stack,
     Typography,
-    useMediaQuery,
+    useMediaQuery
 } from "@mui/material";
 import theme from "@theme";
 
@@ -42,7 +42,7 @@ const ProductCard: FC<ProductCard> = ({
     toggleFavorite,
     addToCart,
     isFavorite,
-    inStock,
+    inStock
 }) => {
     const matches = useMediaQuery(`(min-width:${SCREEN_BREAKPOINTS.xs})`);
 

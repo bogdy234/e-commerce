@@ -28,15 +28,15 @@ const router = createBrowserRouter([
                 children: [
                     {
                         path: "/",
-                        element: <Home />,
+                        element: <Home />
                     },
                     {
                         path: "/signin",
-                        element: <SignIn />,
+                        element: <SignIn />
                     },
                     {
                         path: "/signup",
-                        element: <SignUp />,
+                        element: <SignUp />
                     },
                     {
                         path: "/",
@@ -44,30 +44,30 @@ const router = createBrowserRouter([
                         children: [
                             {
                                 path: "favorites",
-                                element: <Favorites />,
+                                element: <Favorites />
                             },
                             {
                                 path: "profile",
-                                element: <Profile />,
+                                element: <Profile />
                             },
                             {
                                 path: "cart",
-                                element: <Cart />,
+                                element: <Cart />
                             },
                             {
                                 path: "checkout",
-                                element: <Checkout />,
-                            },
-                        ],
+                                element: <Checkout />
+                            }
+                        ]
                     },
                     {
                         path: "/unauthorized",
-                        element: <Unauthorized />,
-                    },
-                ],
-            },
-        ],
-    },
+                        element: <Unauthorized />
+                    }
+                ]
+            }
+        ]
+    }
 ]);
 
 const queryClient = new QueryClient();

@@ -4,23 +4,23 @@ import axios from "axios";
 export const getCartProducts = async (token: string) => {
     const { data: response } = await axios.get(`${SERVER_URL}/api/users/cart`, {
         headers: {
-            Authorization: `Bearer ${token}`,
-        },
+            Authorization: `Bearer ${token}`
+        }
     });
     return response;
 };
 
 export const deleteCartProduct = async (token: string, cart_id: number) => {
     const data = {
-        cart_id: cart_id,
+        cart_id: cart_id
     };
     const { data: response } = await axios.delete(
         `${SERVER_URL}/api/users/cart`,
         {
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token}`
             },
-            data,
+            data
         }
     );
     return response;
@@ -33,7 +33,7 @@ export const addCartProduct = async (
 ) => {
     const data = {
         product_id: productId,
-        quantity,
+        quantity
     };
 
     const { data: response } = await axios.post(
@@ -41,8 +41,8 @@ export const addCartProduct = async (
         data,
         {
             headers: {
-                Authorization: `Bearer ${token}`,
-            },
+                Authorization: `Bearer ${token}`
+            }
         }
     );
     return response;
@@ -55,7 +55,7 @@ export const editCartProduct = async (
 ) => {
     const data = {
         cart_id: cartId,
-        new_quantity: productQuantity,
+        new_quantity: productQuantity
     };
 
     const { data: response } = await axios.put(
@@ -63,8 +63,8 @@ export const editCartProduct = async (
         data,
         {
             headers: {
-                Authorization: `Bearer ${token}`,
-            },
+                Authorization: `Bearer ${token}`
+            }
         }
     );
     return response;

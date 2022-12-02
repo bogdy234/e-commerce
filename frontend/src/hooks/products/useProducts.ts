@@ -18,7 +18,7 @@ const useProducts = (): UseProductsData => {
         queryKey: ["products"],
         queryFn: getProducts,
         select: (response) =>
-            filterProducts(response, state?.searchData, state?.category),
+            filterProducts(response, state?.searchData, state?.category)
     });
 
     return { isLoading, error, data, isFetching };

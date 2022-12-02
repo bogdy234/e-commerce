@@ -17,8 +17,8 @@ const useRefreshToken = (): UseRefreshTokenData => {
             `${SERVER_URL}/api/users/me`,
             {
                 headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                    Authorization: `Bearer ${token}`
+                }
             }
         );
 
@@ -29,7 +29,7 @@ const useRefreshToken = (): UseRefreshTokenData => {
         queryKey: ["userDataRefresh"],
         queryFn: refresh,
         retry: false,
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: false
     });
 
     return { isLoading, data };

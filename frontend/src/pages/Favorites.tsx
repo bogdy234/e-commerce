@@ -12,7 +12,7 @@ import {
     Divider,
     Skeleton,
     Stack,
-    Typography,
+    Typography
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
@@ -23,7 +23,7 @@ const Favorites: FC = (): ReactElement => {
         isLoading,
         favoriteProducts,
         favoriteProductsNumber,
-        mutateDelete,
+        mutateDelete
     } = useFavoriteProducts();
     const { mutateAdd } = useCart();
     const matches = useMediaQuery(`(min-width:${SCREEN_BREAKPOINTS.md})`);

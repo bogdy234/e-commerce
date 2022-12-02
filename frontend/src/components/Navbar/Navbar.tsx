@@ -31,7 +31,7 @@ import {
     Stack,
     SwipeableDrawer,
     Toolbar,
-    Typography,
+    Typography
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useQueryClient } from "@tanstack/react-query";
@@ -40,15 +40,15 @@ const loggedInOptions = [
     {
         icon: <PersonIcon />,
         label: "Profile",
-        href: "/profile",
+        href: "/profile"
     },
     { icon: <FavoriteIcon />, label: "Favorites", href: "/favorites" },
     { icon: <ShoppingCartIcon />, label: "My Cart", href: "/cart" },
-    { icon: <LogoutIcon />, label: "Logout", href: "/" },
+    { icon: <LogoutIcon />, label: "Logout", href: "/" }
 ];
 
 const loggedOutOptions = [
-    { icon: <PersonIcon />, label: "Login", href: "/signin" },
+    { icon: <PersonIcon />, label: "Login", href: "/signin" }
 ];
 
 const Navbar: FC = () => {
@@ -140,7 +140,7 @@ const Navbar: FC = () => {
                 sx={{
                     display: "flex",
                     justifyContent: "space-between",
-                    height: 64,
+                    height: 64
                 }}
             >
                 <Link to="/">
@@ -196,7 +196,7 @@ const Navbar: FC = () => {
                                 <Stack
                                     sx={{
                                         cursor: "pointer",
-                                        color: "white",
+                                        color: "white"
                                     }}
                                     alignItems="center"
                                 >

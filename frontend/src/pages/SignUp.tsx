@@ -22,7 +22,7 @@ const SignUp = () => {
         passwordError,
         validateInputs,
         mutate,
-        isLoading,
+        isLoading
     } = useRegisterMutation();
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -34,7 +34,7 @@ const SignUp = () => {
             last_name: data.get("lastName"),
             email: data.get("email"),
             password: data.get("password"),
-            confirm_password: data.get("confirmPassword"),
+            confirm_password: data.get("confirmPassword")
         };
         const { first_name, last_name, email, password, confirm_password } =
             userData;
@@ -62,7 +62,7 @@ const SignUp = () => {
                     marginTop: 14,
                     display: "flex",
                     flexDirection: "column",
-                    alignItems: "center",
+                    alignItems: "center"
                 }}
             >
                 <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -88,7 +88,7 @@ const SignUp = () => {
                                 label="First Name"
                                 autoFocus
                                 inputProps={{
-                                    maxLength: 50,
+                                    maxLength: 50
                                 }}
                                 error={!!firstNameError}
                                 helperText={firstNameError}

@@ -6,8 +6,8 @@ export const getFavoriteProducts = async (token: string) => {
         `${SERVER_URL}/api/products/favourites`,
         {
             headers: {
-                Authorization: `Bearer ${token}`,
-            },
+                Authorization: `Bearer ${token}`
+            }
         }
     );
     return response;
@@ -18,15 +18,15 @@ export const deleteFavoriteProduct = async (
     productId: number
 ) => {
     const data = {
-        favourite_id: productId,
+        favourite_id: productId
     };
     const { data: response } = await axios.delete(
         `${SERVER_URL}/api/products/favourites`,
         {
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token}`
             },
-            data,
+            data
         }
     );
     return response;
@@ -34,7 +34,7 @@ export const deleteFavoriteProduct = async (
 
 export const addFavoriteProduct = async (token: string, productId: number) => {
     const data = {
-        product_id: productId,
+        product_id: productId
     };
 
     const { data: response } = await axios.post(
@@ -42,8 +42,8 @@ export const addFavoriteProduct = async (token: string, productId: number) => {
         data,
         {
             headers: {
-                Authorization: `Bearer ${token}`,
-            },
+                Authorization: `Bearer ${token}`
+            }
         }
     );
     return response;

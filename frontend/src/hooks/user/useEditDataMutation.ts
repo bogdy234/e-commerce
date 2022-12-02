@@ -45,7 +45,7 @@ const useEditDataMutation = () => {
         const valid = {
             validFirstName,
             validLastName,
-            validEmail,
+            validEmail
         };
 
         const isValid = !Object.values(valid).some((element) => !element);
@@ -76,7 +76,7 @@ const useEditDataMutation = () => {
         // mutate,
         // isLoading,
         validateInputs,
-        clearErrors,
+        clearErrors
     };
 };
 

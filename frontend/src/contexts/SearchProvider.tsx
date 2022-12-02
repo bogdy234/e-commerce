@@ -4,7 +4,7 @@ import {
     RESET_CATEGORY,
     RESET_SEARCH,
     SET_CATEGORY,
-    SET_SEARCH,
+    SET_SEARCH
 } from "@constants/search";
 import { Action, SearchContextType, SearchState } from "@interfaces/search";
 
@@ -15,7 +15,7 @@ interface SearchProviderProps {
 // first make the token null to use as isLoading on require auth
 const initialState: SearchState = {
     searchData: "",
-    category: "",
+    category: ""
 };
 
 const SearchContext = createContext<SearchContextType>({} as SearchContextType);
@@ -25,25 +25,25 @@ const userReducer = (state = initialState, action: Action) => {
         case SET_SEARCH: {
             return {
                 ...state,
-                ...action.payload,
+                ...action.payload
             };
         }
         case RESET_SEARCH: {
             return {
                 ...state,
-                searchData: "",
+                searchData: ""
             };
         }
         case SET_CATEGORY: {
             return {
                 ...state,
-                ...action.payload,
+                ...action.payload
             };
         }
         case RESET_CATEGORY: {
             return {
                 ...state,
-                category: "",
+                category: ""
             };
         }
         default: {

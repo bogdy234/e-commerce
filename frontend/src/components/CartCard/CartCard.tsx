@@ -15,7 +15,7 @@ import {
     Rating,
     Select,
     Stack,
-    Typography,
+    Typography
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import theme from "@theme";
@@ -47,7 +47,7 @@ const CartCard: FC<CartCardProps> = ({
     moveToFavorites,
     inStock = true,
     quantity,
-    productQuantity,
+    productQuantity
 }): ReactElement => {
     const matches = useMediaQuery(`(min-width:${SCREEN_BREAKPOINTS.md})`);
     const { mutateEdit } = useCart();
@@ -121,15 +121,15 @@ const CartCard: FC<CartCardProps> = ({
                             onChange={(e) =>
                                 mutateEdit({
                                     cartId: id,
-                                    productQuantity: e.target.value as number,
+                                    productQuantity: e.target.value as number
                                 })
                             }
                             MenuProps={{
                                 PaperProps: {
                                     sx: {
-                                        maxHeight: 500,
-                                    },
-                                },
+                                        maxHeight: 500
+                                    }
+                                }
                             }}
                         >
                             {generateIds(productQuantity, 1, false).map((v) => (

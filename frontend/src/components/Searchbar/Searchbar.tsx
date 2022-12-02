@@ -26,7 +26,7 @@ const Searchbar: FC<SearchbarProps> = ({ onSearch }) => {
                 m: "0 20px",
                 display: "flex",
                 alignItems: "center",
-                height: 40,
+                height: 40
             }}
             onSubmit={handleSubmit}
         >

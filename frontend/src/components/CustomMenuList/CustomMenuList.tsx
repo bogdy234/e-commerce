@@ -9,43 +9,43 @@ import {
     ListItemButton,
     ListItemIcon,
     ListItemText,
-    Paper,
+    Paper
 } from "@mui/material";
 import { createTheme, styled, ThemeProvider } from "@mui/material/styles";
 
 const data = [
     { icon: <SportsEsportsIcon />, label: "Gaming" },
     { icon: <CableIcon />, label: "Electronics" },
-    { icon: <CheckroomIcon />, label: "Fashion" },
+    { icon: <CheckroomIcon />, label: "Fashion" }
 ];
 
 const FireNav = styled(List)<{ component?: ElementType }>({
     "& .MuiListItemButton-root": {
         paddingLeft: 24,
-        paddingRight: 24,
+        paddingRight: 24
     },
     "& .MuiListItemIcon-root": {
         minWidth: 0,
-        marginRight: 16,
+        marginRight: 16
     },
     "& .MuiSvgIcon-root": {
-        fontSize: 20,
-    },
+        fontSize: 20
+    }
 });
 
 const theme = createTheme({
     components: {
         MuiListItemButton: {
             defaultProps: {
-                disableTouchRipple: true,
-            },
-        },
+                disableTouchRipple: true
+            }
+        }
     },
     palette: {
         mode: "dark",
         primary: { main: "rgb(102, 157, 246)" },
-        background: { paper: "rgb(5, 30, 52)" },
-    },
+        background: { paper: "rgb(5, 30, 52)" }
+    }
 });
 
 interface CustomMenuListProps {
@@ -65,7 +65,7 @@ const CustomMenuList: FC<CustomMenuListProps> = forwardRef<
                 position: "absolute",
                 left: "-40px",
                 top: "50px",
-                zIndex: 99,
+                zIndex: 99
             }}
             ref={ref}
         >
@@ -75,7 +75,7 @@ const CustomMenuList: FC<CustomMenuListProps> = forwardRef<
                         <Box
                             sx={{
                                 bgcolor: open ? "rgba(71, 98, 130, 0.1)" : null,
-                                pb: open ? 2 : 0,
+                                pb: open ? 2 : 0
                             }}
                         >
                             {open &&
@@ -85,7 +85,7 @@ const CustomMenuList: FC<CustomMenuListProps> = forwardRef<
                                         sx={{
                                             py: 0,
                                             minHeight: 52,
-                                            color: "rgba(255,255,255,.8)",
+                                            color: "rgba(255,255,255,.8)"
                                         }}
                                         onClick={() =>
                                             handleClickCategory(item.label)
@@ -98,7 +98,7 @@ const CustomMenuList: FC<CustomMenuListProps> = forwardRef<
                                             primary={item.label}
                                             primaryTypographyProps={{
                                                 fontSize: 14,
-                                                fontWeight: "medium",
+                                                fontWeight: "medium"
                                             }}
                                         />
                                     </ListItemButton>

@@ -7,7 +7,7 @@ import {
     ListItem,
     ListItemButton,
     ListItemIcon,
-    ListItemText,
+    ListItemText
 } from "@mui/material";
 
 interface DrawerListProps {
@@ -19,12 +19,12 @@ interface DrawerListProps {
 const DrawerList: FC<DrawerListProps> = ({
     options,
     toggleDrawer,
-    onClickNavOption,
+    onClickNavOption
 }): ReactElement => {
     return (
         <Box
             sx={{
-                width: 250,
+                width: 250
             }}
             role="presentation"
             onClick={toggleDrawer}

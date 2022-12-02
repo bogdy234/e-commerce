@@ -25,7 +25,7 @@ const Cart: FC = () => {
         cartProductsNumber,
         mutateDelete: mutateDeleteCart,
         totalAmount,
-        totalAmountDiscount,
+        totalAmountDiscount
     } = useCart();
     const { mutateAdd } = useFavoriteProducts();
 
