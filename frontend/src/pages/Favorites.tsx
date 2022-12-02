@@ -12,7 +12,7 @@ import {
     Divider,
     Skeleton,
     Stack,
-    Typography
+    Typography,
 } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 

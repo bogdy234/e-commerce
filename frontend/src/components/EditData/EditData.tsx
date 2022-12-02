@@ -8,7 +8,7 @@ import {
     Modal,
     Stack,
     TextField,
-    Typography
+    Typography,
 } from "@mui/material";
 
 interface EditDataProps {

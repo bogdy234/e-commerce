@@ -18,7 +18,7 @@
         "format:check": "prettier --check .",
         "preview": "vite preview",
         "prepare": "cd .. && husky install frontend/.husky",
-        "hook": "yarn lint && yarn tsc && yarn format:check"
+        "hook": "yarn tsc && yarn format:check"
     },
     "dependencies": {
         "@emotion/react": "^11.10.5",

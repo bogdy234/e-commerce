@@ -15,7 +15,7 @@ import {
     Grid,
     Skeleton,
     Stack,
-    Typography
+    Typography,
 } from "@mui/material";
 
 const skeletonIds = generateIds(10);
